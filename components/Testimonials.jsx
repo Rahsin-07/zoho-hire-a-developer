@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
 
 const testimonials = [
   {
@@ -7,199 +6,102 @@ const testimonials = [
     color: 'var(--primary)',
     name: 'Kumari Pitshop',
     role: 'CEO, Kumari Pitshop',
-    text: '"We run a bike and car accessories shop and were looking for a better way to manage our billing and inventory. A friend suggested this team, and they walked us through Zoho Books and Zoho Inventory in a very simple way. They are one of the best Zoho partners we ve come across. No technical terms, just practical solutions. Really happy with the support we received."'
+    text: 'We run a bike and car accessories shop and were looking for a better way to manage our billing and inventory. Really happy with the support.',
   },
   {
     initials: 'SS',
     color: '#10b981',
     name: 'Sankara Subramanian A',
     role: 'Client',
-    text: '"Thanks a ton Mr.Arul & ZoFlowX team ZoFlowX sets a benchmark as one of the best Zoho partners in Chennai. Their expertise, strategic approach, and customer-first mindset make them a trusted Zoho consultant in Chennai."'
+    text: 'ZoFlowX sets a benchmark as one of the best Zoho partners in Chennai. Their expertise and customer-first mindset make them trusted consultants.',
   },
   {
     initials: 'KP',
     color: '#f97316',
     name: 'Kishore PA',
     role: 'Employee, Cavintek',
-    text: '"We partnered with ZoFlowX at Cflow (Cavintek) for our Zoho CRM implementation, and the experience has been outstanding. The team at ZoFlowX listens, understands your exact requirement."'
+    text: 'We partnered for Zoho CRM implementation and the experience has been outstanding. The team listens and understands requirements properly.',
   },
 ]
 
 export default function Testimonials() {
-  const ref = useRef(null)
-  const [openIndex, setOpenIndex] = useState(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    ref.current
-      ?.querySelectorAll('.fade-up')
-      .forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
-  const toggleReview = (index) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
-
   return (
-    <section
-      id="testimonials"
-      style={{ background: '#faf9f7' }}
-      ref={ref}
-    >
+    <section style={{ background: '#faf9f7', padding: '70px 0' }}>
       <div className="container">
-        <div className="text-center mb-5 fade-up">
-          <div className="section-label">Client Voices</div>
 
-          <h2 className="section-title">
-            Voices of our happy clients
-          </h2>
-
-          <p className="section-sub mx-auto">
-            Real feedback from real businesses —
-            see why companies trust us as their preferred Zoho Partner.
-          </p>
+        <div className="text-center mb-5">
+          <h2>Voices of our happy clients</h2>
+          <p>Real feedback from real businesses</p>
         </div>
 
         <div className="row g-4">
+
           {testimonials.map((t, i) => (
-            <div
-              className="col-md-6 col-lg-4 fade-up"
-              key={t.name}
-              style={{
-                transitionDelay: `${i * 0.1}s`,
-              }}
-            >
+            <div key={i} className="col-md-6 col-lg-4">
+
               <div
-                onClick={() => toggleReview(i)}
                 style={{
                   background: '#fff',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: 24,
+                  border: '1px solid #eaeaea',
+                  borderRadius: 14,
+                  padding: 22,
                   cursor: 'pointer',
-                  transition: '0.3s ease',
-                  boxShadow:
-                    openIndex === i
-                      ? 'var(--shadow-lg)'
-                      : 'var(--shadow-sm)',
+                  transition: 'all 0.25s ease',
+                }}
+
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-6px)'
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.08)'
+                  e.currentTarget.style.borderColor = t.color
+                }}
+
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = 'none'
+                  e.currentTarget.style.borderColor = '#eaeaea'
                 }}
               >
-                {/* Top */}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 12,
-                    }}
-                  >
+
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+
                     <div
                       style={{
-                        width: 46,
-                        height: 46,
+                        width: 42,
+                        height: 42,
                         borderRadius: '50%',
                         background: t.color,
+                        color: '#fff',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontWeight: 700,
-                        color: '#fff',
-                        fontSize: '1rem',
                       }}
                     >
                       {t.initials}
                     </div>
 
                     <div>
-                      <div
-                        style={{
-                          fontWeight: 700,
-                          fontSize: '0.95rem',
-                          color: 'var(--dark)',
-                        }}
-                      >
-                        {t.name}
-                      </div>
-
-                      <div
-                        style={{
-                          fontSize: '0.8rem',
-                          color: 'var(--muted)',
-                        }}
-                      >
-                        {t.role}
-                      </div>
+                      <div style={{ fontWeight: 600 }}>{t.name}</div>
+                      <div style={{ fontSize: 12, color: '#777' }}>{t.role}</div>
                     </div>
+
                   </div>
 
-                  <div
-                    style={{
-                      fontSize: '1.2rem',
-                      color: 'var(--primary)',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {openIndex === i ? '−' : '+'}
-                  </div>
                 </div>
 
-                {/* Expand Content */}
-                <div
-                  style={{
-                    maxHeight:
-                      openIndex === i ? '500px' : '0px',
-                    overflow: 'hidden',
-                    transition: 'all 0.4s ease',
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingTop: 20,
-                    }}
-                  >
-                    <div
-                      style={{
-                        color: '#f59e0b',
-                        marginBottom: 14,
-                      }}
-                    >
-                      ★★★★★
-                    </div>
+                {/* Text always visible */}
+                <p style={{ marginTop: 14, color: '#555', lineHeight: 1.6 }}>
+                  {t.text}
+                </p>
 
-                    <div
-                      style={{
-                        fontSize: '0.95rem',
-                        color: 'var(--mid)',
-                        lineHeight: 1.8,
-                        fontStyle: 'italic',
-                      }}
-                    >
-                      {t.text}
-                    </div>
-                  </div>
-                </div>
               </div>
+
             </div>
           ))}
+
         </div>
       </div>
     </section>

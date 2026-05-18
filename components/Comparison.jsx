@@ -7,7 +7,7 @@ const rows = [
     freelancer:
       'Rates vary widely and hidden costs like revisions, delays, and rework add up fast.',
     inhouse:
-      'Hiring, salary, benefits, and training make in-house the most expensive option long term.',
+      'Hiring, salary, benefits, and training make in house the most expensive option long term.',
     zoflowx:
       'Transparent fixed pricing from $11/hour with no surprise charges or hidden fees.'
   },
@@ -110,7 +110,7 @@ export default function Comparison() {
 
   const GREEN = '#22c55e'
   const ORANGE = '#f97316'
-  const BLUE = '#3b82f6'
+  const BLUE = '#3669d5'
   const BORDER = '#ece6dd'
   const TEXT = '#334155'
   const HEADING = '#0f172a'
@@ -129,9 +129,9 @@ export default function Comparison() {
           <span className="section-label">Why Choose Us</span>
 
           <h2 className="section-title">
-            <span style={{ color: BLUE }}>ZoFlowX</span> vs{' '}
+            <span style={{ color: "#3669d5" }}>ZoFlowX</span> vs{' '}
             <span style={{ color: 'black' }}>Freelancer</span> vs{' '}
-            <span style={{ color: 'black' }}>In-house developer</span>
+            <span style={{ color: 'black' }}>In house developer</span>
           </h2>
 
           <p className="section-sub mx-auto">
@@ -146,7 +146,8 @@ export default function Comparison() {
             overflow: 'visible',
             background: '#fff',
             border: `1px solid ${BORDER}`,
-            boxShadow: '0 8px 30px rgba(15,23,42,0.06)'
+            boxShadow: '0 8px 30px rgba(15,23,42,0.06)',
+            transition: 'box-shadow 0.4s cubic-bezier(0.22,1,0.36,1)',
           }}
         >
           <div className="table-responsive">
@@ -157,7 +158,7 @@ export default function Comparison() {
                 minWidth: 900,
                 borderCollapse: 'separate',
                 borderSpacing: 0,
-                fontFamily: 'Inter,sans-serif'
+                fontFamily: 'Inter, sans-serif'
               }}
             >
               <thead>
@@ -176,7 +177,7 @@ export default function Comparison() {
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Plus Jakarta Sans,sans-serif',
+                      fontFamily: 'Inter, sans-serif',
                       fontWeight: 700,
                       fontSize: '1.05rem',
                       color: 'Black',
@@ -191,7 +192,7 @@ export default function Comparison() {
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Plus Jakarta Sans,sans-serif',
+                      fontFamily: 'Inter, sans-serif',
                       fontWeight: 700,
                       fontSize: '1.05rem',
                       color: 'BLACK',
@@ -199,14 +200,14 @@ export default function Comparison() {
                       background: '#eff6ff'
                     }}
                   >
-                    In-house developer
+                    In house developer
                   </th>
 
                   <th
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Plus Jakarta Sans,sans-serif',
+                      fontFamily: 'Inter, sans-serif',
                       fontWeight: 700,
                       fontSize: '1.05rem',
                       color: HEADING,
@@ -224,7 +225,7 @@ export default function Comparison() {
                         alignItems: 'center',
                         gap: 10,
                         flexWrap: 'wrap',
-                        color: 'blue',
+                        color:BLUE,
                         justifyContent: 'center'
                       }}
                     >
@@ -260,7 +261,8 @@ export default function Comparison() {
                     color: TEXT,
                     borderTop: `1px solid ${BORDER}`,
                     verticalAlign: 'top',
-                    background: '#fff'
+                    background: '#fff',
+                    transition: 'background 0.3s ease',
                   }
 
                   const highlightCell = {
@@ -280,12 +282,31 @@ export default function Comparison() {
                   }
 
                   return (
-                    <tr key={i}>
+                    <tr key={i}
+                      onMouseEnter={e => {
+                        const cells = e.currentTarget.querySelectorAll('td')
+                        cells.forEach((c, idx) => {
+                          if (idx === 0) c.style.background = '#f1f5f9'
+                          else if (idx === 1) c.style.background = '#ffedd5'
+                          else if (idx === 2) c.style.background = '#dbeafe'
+                          else c.style.background = '#dcfce7'
+                        })
+                      }}
+                      onMouseLeave={e => {
+                        const cells = e.currentTarget.querySelectorAll('td')
+                        cells.forEach((c, idx) => {
+                          if (idx === 0) c.style.background = '#f8fafc'
+                          else if (idx === 1) c.style.background = '#fff7ed'
+                          else if (idx === 2) c.style.background = '#eff6ff'
+                          else c.style.background = '#f0fdf4'
+                        })
+                      }}
+                    >
                       <td
                         style={{
                           ...baseCell,
                           background: '#f8fafc',
-                          fontFamily: 'Plus Jakarta Sans,sans-serif',
+                          fontFamily: 'Inter, sans-serif',
                           fontWeight: 700,
                           fontSize: '0.78rem',
                           letterSpacing: '0.09em',
@@ -328,16 +349,24 @@ export default function Comparison() {
           style={{
             background:
               'linear-gradient(135deg,#3b82f6 0%,#8b5cf6 50%,#f97316 100%)',
+            backgroundSize: '200% 200%',
             borderRadius: 20,
             padding: '48px',
             textAlign: 'center',
-            marginTop: 32
+            marginTop: 32,
+            animation: 'cmpGrad 9s ease-in-out infinite',
           }}
         >
+          <style>{`
+            @keyframes cmpGrad {
+              0%, 100% { background-position: 0% 50%; }
+              50%      { background-position: 100% 50%; }
+            }
+          `}</style>
           <h3
             style={{
               color: '#fff',
-              fontFamily: 'Plus Jakarta Sans,sans-serif',
+              fontFamily: 'Inter, sans-serif',
               marginBottom: 8
             }}
           >
@@ -347,7 +376,8 @@ export default function Comparison() {
           <p
             style={{
               color: 'rgba(255,255,255,0.85)',
-              marginBottom: 24
+              marginBottom: 24,
+              fontFamily: 'Inter, sans-serif',
             }}
           >
             Talk to a certified Zoho expert and get a free consultation
@@ -361,23 +391,22 @@ export default function Comparison() {
               color: '#0f172a',
               border: 'none',
               borderRadius: 10,
-              padding: '0.8rem 2rem',
-              fontFamily: 'Plus Jakarta Sans,sans-serif',
+              padding: '0.9rem 2rem',
+              fontFamily: 'Inter, sans-serif',
               fontWeight: 700,
               fontSize: '0.9rem',
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
               textDecoration: 'none',
-              transition: 'all 0.2s'
+              transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow =
-                '0 8px 24px rgba(0,0,0,0.15)'
+              e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)'
+              e.currentTarget.style.boxShadow = '0 14px 30px rgba(0,0,0,0.22)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = ''
+              e.currentTarget.style.transform = 'translateY(0) scale(1)'
               e.currentTarget.style.boxShadow = ''
             }}
           >

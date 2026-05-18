@@ -4,57 +4,57 @@ import { useEffect, useRef } from 'react'
 const industries = [
   {
     icon: '🛍️',
-    title: 'Retail & eCommerce',
-    desc: 'Sync orders, inventory, and customer data across Shopify and WooCommerce in real time.',
+    title: 'Retail & ecommerce',
+    desc: 'Hire a Zoho developer to sync orders, inventory, and customer data across Shopify and WooCommerce in real time.',
     color: '#f97316',
     bg: 'rgba(249,115,22,0.08)',
   },
   {
     icon: '🏠',
-    title: 'Real Estate',
-    desc: 'Automate lead tracking, property pipelines, and client follow-ups for agents and brokers.',
+    title: 'Real estate',
+    desc: 'Our best Zoho developers automate lead tracking, property pipelines, and client follow ups for agents and brokers.',
     color: '#10b981',
     bg: 'rgba(16,185,129,0.08)',
   },
   {
     icon: '🏥',
     title: 'Healthcare',
-    desc: 'Build secure patient management, appointment flows, and billing systems for clinics.',
+    desc: 'Zoho certified developers build secure patient management, appointment flows, and billing systems for clinics and hospitals.',
     color: '#ef4444',
     bg: 'rgba(239,68,68,0.08)',
   },
   {
     icon: '💼',
-    title: 'Professional Services',
-    desc: 'Manage client relationships, automate proposals, and track project delivery end to end.',
+    title: 'Professional services',
+    desc: 'Hire a Zoho CRM developer to manage client relationships, automate proposals, and track project delivery end to end.',
     color: '#2563eb',
     bg: 'rgba(37,99,235,0.08)',
   },
   {
     icon: '🏭',
     title: 'Manufacturing',
-    desc: 'Connect production, inventory, and sales data so your operations run without manual handoffs.',
+    desc: 'Our Zoho integration experts connect production, inventory, and sales data so your operations run without manual handoffs.',
     color: '#8b5cf6',
     bg: 'rgba(139,92,246,0.08)',
   },
   {
     icon: '🎓',
     title: 'Education',
-    desc: 'Automate student admissions, fee collection, and communication workflows.',
+    desc: 'Hire our Zoho developer to automate student admissions, fee collection, and communication workflows for schools and EdTech platforms.',
     color: '#eab308',
     bg: 'rgba(234,179,8,0.08)',
   },
   {
     icon: '💻',
     title: 'Technology & SaaS',
-    desc: 'Build custom CRM workflows, API integrations, and analytics dashboards for tech teams.',
+    desc: 'Our Zoho certified developers build custom CRM workflows, API integrations, and analytics dashboards for fast growing tech teams.',
     color: '#06b6d4',
     bg: 'rgba(6,182,212,0.08)',
   },
   {
     icon: '✈️',
-    title: 'Travel & Tourism',
-    desc: 'Automate booking flows, manage itineraries, and connect payment tools for travel agencies.',
+    title: 'Travel & tourism',
+    desc: 'Hire our Zoho certified developers to automate booking flows, manage client itineraries, and connect payment tools for your travel agency.',
     color: '#ec4899',
     bg: 'rgba(236,72,153,0.08)',
   },
@@ -92,8 +92,8 @@ export default function Industries() {
             Zoho expertise built for how your industry works
           </h2>
           <p className="section-sub mx-auto">
-            Our Zoho-certified developers bring deep industry knowledge to every
-            project — delivering solutions built for how your business actually works.
+            Our Zoho certified developers bring deep industry knowledge to every
+            project, delivering solutions built for how your business actually works.
           </p>
         </div>
 
@@ -112,26 +112,48 @@ export default function Industries() {
                   borderRadius: 16,
                   padding: '28px 24px',
                   height: '100%',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                   cursor: 'default',
                   position: 'relative',
                   overflow: 'hidden',
                   borderTop: `3px solid ${ind.color}`,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.09)'
+                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = `0 24px 48px ${ind.color}26`
                   e.currentTarget.style.borderColor = ind.color
-                  e.currentTarget.querySelector('.ind-icon').style.transform = 'scale(1.1)'
+                  const ic = e.currentTarget.querySelector('.ind-icon')
+                  if (ic) {
+                    ic.style.transform = 'scale(1.18) rotate(-8deg)'
+                    ic.style.background = ind.color
+                  }
+                  const title = e.currentTarget.querySelector('.ind-title')
+                  if (title) title.style.color = ind.color
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = ''
                   e.currentTarget.style.boxShadow = ''
                   e.currentTarget.style.borderColor = '#e8e3dd'
                   e.currentTarget.style.borderTopColor = ind.color
-                  e.currentTarget.querySelector('.ind-icon').style.transform = ''
+                  const ic = e.currentTarget.querySelector('.ind-icon')
+                  if (ic) {
+                    ic.style.transform = 'scale(1) rotate(0)'
+                    ic.style.background = ind.bg
+                  }
+                  const title = e.currentTarget.querySelector('.ind-title')
+                  if (title) title.style.color = '#0f172a'
                 }}
               >
+                {/* Decorative glow */}
+                <div style={{
+                  position: 'absolute',
+                  top: -40, right: -40,
+                  width: 100, height: 100,
+                  borderRadius: '50%',
+                  background: `radial-gradient(circle, ${ind.color}1a, transparent 70%)`,
+                  pointerEvents: 'none',
+                }} />
+
                 {/* Icon */}
                 <div
                   className="ind-icon"
@@ -145,20 +167,21 @@ export default function Industries() {
                     fontSize: '1.6rem',
                     marginBottom: 18,
                     background: ind.bg,
-                    transition: 'transform 0.3s ease',
+                    transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
                   }}
                 >
                   {ind.icon}
                 </div>
 
                 {/* Title */}
-                <div style={{
-                  fontFamily: 'Plus Jakarta Sans, sans-serif',
+                <div className="ind-title" style={{
+                  fontFamily: 'Inter, sans-serif',
                   fontSize: '1rem',
                   fontWeight: 700,
                   color: '#0f172a',
                   marginBottom: 10,
                   lineHeight: 1.3,
+                  transition: 'color 0.35s ease',
                 }}>
                   {ind.title}
                 </div>
@@ -168,6 +191,7 @@ export default function Industries() {
                   fontSize: '0.875rem',
                   color: '#64748b',
                   lineHeight: 1.65,
+                  fontFamily: 'Inter, sans-serif',
                 }}>
                   {ind.desc}
                 </div>
@@ -196,11 +220,18 @@ export default function Industries() {
             width: 300, height: 300,
             background: 'radial-gradient(circle, rgba(249,115,22,0.2) 0%, transparent 70%)',
             pointerEvents: 'none',
+            animation: 'glowFloat 8s ease-in-out infinite',
           }} />
+          <style>{`
+            @keyframes glowFloat {
+              0%, 100% { transform: translate(0, 0); }
+              50%      { transform: translate(-20px, 20px); }
+            }
+          `}</style>
 
           <h4 style={{
             color: '#fff',
-            fontFamily: 'Plus Jakarta Sans,sans-serif',
+            fontFamily: 'Inter, sans-serif',
             marginBottom: 12,
             fontSize: '1.9rem',
             fontWeight: 700,
@@ -217,6 +248,7 @@ export default function Industries() {
             marginInline: 'auto',
             lineHeight: 1.7,
             position: 'relative',
+            fontFamily: 'Inter, sans-serif',
           }}>
             We work across all sectors. Tell us your business and we'll build
             the right Zoho solution for you.
@@ -231,19 +263,19 @@ export default function Industries() {
               borderRadius: 12,
               textDecoration: 'none',
               fontWeight: 700,
-              fontFamily: 'Plus Jakarta Sans,sans-serif',
+              fontFamily: 'Inter, sans-serif',
               display: 'inline-flex',
               alignItems: 'center',
               gap: 10,
-              transition: 'all 0.3s ease',
+              transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
               boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
               position: 'relative',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 14px 32px rgba(0,0,0,0.25)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)'; e.currentTarget.style.boxShadow = '0 14px 32px rgba(0,0,0,0.28)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)' }}
           >
             Talk to a Zoho Expert
-           
+            <i className="bi bi-arrow-right" />
           </a>
         </div>
       </div>
