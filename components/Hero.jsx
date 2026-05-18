@@ -250,36 +250,36 @@ export default function Hero() {
         </div>
 
         {/* Heading  reduced size */}
-        <h1
-          className="hero-rise-2"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: 'clamp(2rem, 4.4vw, 3.6rem)',
-            fontWeight: 800,
-            color: '#0f172a',
-            marginBottom: 22,
-            letterSpacing: '-1.2px',
-            lineHeight: 1.08,
-            maxWidth: 980,
-            marginInline: 'auto',
-          }}
-        >
-          Hire a Zoho developer who{' '}
-          <span
-            style={{
-              background:
-                'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              animation: 'heroGradShift 6s ease-in-out infinite',
-              display: 'inline-block',
-            }}
-          >
-            actually builds
-          </span>
-        </h1>
+      <h1
+  className="hero-rise-2"
+  style={{
+    fontFamily: 'Inter, sans-serif',
+    fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
+    fontWeight: 500,
+    color: '#0f172a',
+    marginBottom: 22,
+    letterSpacing: '-1.2px',
+    lineHeight: 1.0,
+    maxWidth: 980,
+    marginInline: 'auto',
+  }}
+>
+  Hire a Zoho developer who{' '}
+  <span
+    style={{
+      background:
+        'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
+      backgroundSize: '200% 100%',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      animation: 'heroGradShift 6s ease-in-out infinite',
+      display: 'inline-block',
+    }}
+  >
+    actually builds
+  </span>
+</h1>
 
         {/* Paragraph  full doc text, hyphens removed */}
         <p
@@ -289,7 +289,7 @@ export default function Hero() {
             color: '#475569',
             maxWidth: 820,
             margin: '0 auto 18px',
-            lineHeight: 1.75,
+            lineHeight: 1.30,
             fontFamily: 'Inter, sans-serif',
             fontWeight: 500,
           }}
@@ -308,7 +308,7 @@ export default function Hero() {
             color: '#64748b',
             maxWidth: 820,
             margin: '0 auto 38px',
-            lineHeight: 1.75,
+            lineHeight: 1.30,
             fontFamily: 'Inter, sans-serif',
             fontWeight: 400,
           }}
