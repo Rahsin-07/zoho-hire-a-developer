@@ -28,7 +28,7 @@ export default function HireZohoDeveloper() {
         <Hero />
         <WhyHire />
         <Services />
-        <Pricing />
+        {/* <Pricing /> */}
         <Difference />
         <Process />
         <Industries />

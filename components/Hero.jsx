@@ -19,15 +19,35 @@ const CSS = `
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
-  @keyframes arrowSlide {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(5px); }
-  }
   @keyframes starPop {
     0% { transform: scale(0.6); opacity: 0; }
     70% { transform: scale(1.15); }
     100% { transform: scale(1); opacity: 1; }
   }
+
+  /* ─── Card floats in place — appears, drifts gently, fades out, repeats ─── */
+  @keyframes cardFloatA {
+    0% { transform: translateY(20px) translateX(0); opacity: 0; }
+    15% { opacity: 0.85; }
+    50% { transform: translateY(-15px) translateX(8px); opacity: 0.9; }
+    85% { opacity: 0.85; }
+    100% { transform: translateY(-30px) translateX(-5px); opacity: 0; }
+  }
+  @keyframes cardFloatB {
+    0% { transform: translateY(-20px) translateX(0); opacity: 0; }
+    15% { opacity: 0.85; }
+    50% { transform: translateY(10px) translateX(-10px); opacity: 0.9; }
+    85% { opacity: 0.85; }
+    100% { transform: translateY(25px) translateX(6px); opacity: 0; }
+  }
+  @keyframes cardFloatC {
+    0% { transform: translateY(15px) translateX(-10px); opacity: 0; }
+    15% { opacity: 0.85; }
+    50% { transform: translateY(-10px) translateX(10px); opacity: 0.9; }
+    85% { opacity: 0.85; }
+    100% { transform: translateY(-25px) translateX(0); opacity: 0; }
+  }
+
   .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
   .hero-rise-2 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.18s; }
   .hero-rise-3 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.31s; }
@@ -35,7 +55,7 @@ const CSS = `
   .hero-rise-5 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.57s; }
   .hero-rise-6 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.68s; }
   .hero-rise-7 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.80s; }
-  .hero-arrow:hover .arrow-i { animation: arrowSlide 0.9s ease-in-out infinite; }
+
   .contact-btn {
     display: inline-flex;
     align-items: center;
@@ -80,6 +100,7 @@ const CSS = `
   .star-anim:nth-child(3) { animation-delay: 0.88s; }
   .star-anim:nth-child(4) { animation-delay: 0.96s; }
   .star-anim:nth-child(5) { animation-delay: 1.04s; }
+
   .stats-card {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(16px);
@@ -132,10 +153,95 @@ const CSS = `
     letter-spacing: 0.1px;
     text-align: center;
   }
+
+  /* ─── Floating activity cards ─── */
+  .activity-card {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    font-family: Inter, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+    pointer-events: none;
+    will-change: transform, opacity;
+    opacity: 0;
+  }
+  .activity-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+  }
+  .activity-text { display: flex; flex-direction: column; gap: 1px; }
+  .activity-title { font-size: 0.78rem; font-weight: 700; color: #0f172a; line-height: 1.2; }
+  .activity-sub { font-size: 0.68rem; font-weight: 500; color: #64748b; line-height: 1.2; }
+  .activity-badge {
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  /* Premium background layers */
+  .premium-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0);
+    background-size: 28px 28px;
+    mask-image:
+      radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image:
+      radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
+    pointer-events: none;
+  }
+  .premium-corner {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .premium-corner-tl {
+    top: -200px;
+    left: -200px;
+    background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+  }
+  .premium-corner-br {
+    bottom: -200px;
+    right: -200px;
+    background: radial-gradient(circle, rgba(249,115,22,0.22) 0%, transparent 70%);
+  }
+
+  @media (max-width: 1024px) {
+    .activity-card.hide-tablet { display: none; }
+  }
+  @media (max-width: 768px) {
+    .activity-card { transform: scale(0.85); }
+  }
   @media (max-width: 600px) {
     .stats-card { padding: 20px 16px; gap: 8px; }
     .stat-item { min-width: 80px; padding: 6px 8px; }
     .stat-item:not(:last-child)::after { height: 30px; }
+    .activity-card { display: none; }
   }
 `
 
@@ -144,18 +250,6 @@ const stats = [
   { num: 15, suffix: '+', label: 'Industries Served' },
   { num: 100, suffix: '%', label: 'Client Satisfaction' },
   { num: 14, suffix: '+', label: 'Years Experience' },
-]
-
-const zohoProducts = [
-  '/zoho-crm.png',
-  '/zoho-campaigns.png',
-  '/zoho-creator.png',
-  '/Zoho-mail.png',
-  '/zoho-analytics.png',
-  '/zoho-books.png',
-  '/zoho-desk.png',
-  '/zoho-bookings.png',
-  '/zoho-commerce.png',
 ]
 
 const avatars = [
@@ -168,21 +262,12 @@ const avatars = [
 
 const contactButtons = [
   { label: 'Call', href: 'tel:+918190009222', primary: false },
-  {
-    label: 'WhatsApp',
-    href: 'https://wa.me/918190009222',
-    primary: true,
-  },
+  { label: 'WhatsApp', href: 'https://wa.me/918190009222', primary: true },
   { label: 'Email', href: 'mailto:hello@zoflowx.com', primary: false },
-  {
-    label: 'Schedule',
-    href: 'https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation',
-    primary: false,
-  },
+  { label: 'Schedule', href: 'https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation', primary: false },
   { label: 'Live Chat', href: '#chat', primary: false },
 ]
 
-// Gradient colors for stat numbers — cycling through brand palette
 const statColors = [
   'linear-gradient(135deg, #f97316 0%, #ef4444 100%)',
   'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
@@ -190,12 +275,88 @@ const statColors = [
   'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
 ]
 
+/* ──────────────────────────────────────────────────────────────
+   Activity cards — placed at scattered positions on left & right
+   sides of the hero, each floats gently in place with its own
+   timing so they appear/disappear randomly.
+   ────────────────────────────────────────────────────────────── */
+const activityCards = [
+  // ── LEFT SIDE ──
+  {
+    icon: '⚡', iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+    title: 'Workflow triggered', sub: 'Lead → Sales',
+    badge: null,
+    top: '12%', left: '3%',
+    anim: 'cardFloatA', duration: 9, delay: 0,
+  },
+  {
+    icon: '₹', iconBg: 'linear-gradient(135deg, #10b981, #059669)',
+    title: 'Invoice #INV-2847', sub: '₹45,000 received',
+    badge: { text: 'Paid', color: '#059669', bg: '#d1fae5' },
+    top: '38%', left: '1%',
+    anim: 'cardFloatB', duration: 11, delay: 3,
+  },
+  {
+    icon: '📊', iconBg: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+    title: 'Q4 Sales Report', sub: '+24% MoM growth',
+    badge: null,
+    top: '68%', left: '4%',
+    anim: 'cardFloatC', duration: 10, delay: 6,
+    hideTablet: true,
+  },
+  {
+    icon: '📝', iconBg: 'linear-gradient(135deg, #14b8a6, #06b6d4)',
+    title: 'New form entry', sub: 'Onboarding · #47',
+    badge: null,
+    top: '85%', left: '7%',
+    anim: 'cardFloatA', duration: 12, delay: 8,
+    hideTablet: true,
+  },
+
+  // ── RIGHT SIDE ──
+  {
+    icon: '🎧', iconBg: 'linear-gradient(135deg, #f59e0b, #f97316)',
+    title: 'Ticket #1284', sub: 'Resolved · 2h 14m',
+    badge: { text: 'Closed', color: '#f97316', bg: '#fed7aa' },
+    top: '8%', right: '4%',
+    anim: 'cardFloatB', duration: 10, delay: 2,
+  },
+  {
+    icon: '✉', iconBg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+    title: '3 new emails', sub: 'Inbox · priority',
+    badge: { text: 'New', color: '#6366f1', bg: '#e0e7ff' },
+    top: '32%', right: '2%',
+    anim: 'cardFloatA', duration: 11, delay: 5,
+  },
+  {
+    icon: '📣', iconBg: 'linear-gradient(135deg, #ec4899, #db2777)',
+    title: 'Campaign sent', sub: '12.8K · 38% open',
+    badge: null,
+    top: '60%', right: '5%',
+    anim: 'cardFloatC', duration: 12, delay: 1,
+    hideTablet: true,
+  },
+  {
+    icon: '📅', iconBg: 'linear-gradient(135deg, #06b6d4, #0ea5e9)',
+    title: 'Meeting booked', sub: 'Today · 3:00 PM',
+    badge: { text: 'Today', color: '#0ea5e9', bg: '#dbeafe' },
+    top: '82%', right: '3%',
+    anim: 'cardFloatB', duration: 10, delay: 7,
+  },
+  {
+    icon: '🛒', iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
+    title: 'Order #5421', sub: '₹2,400 · Processing',
+    badge: null,
+    top: '46%', right: '6%',
+    anim: 'cardFloatA', duration: 11, delay: 9,
+    hideTablet: true,
+  },
+]
+
 export default function Hero() {
   const statsRef = useRef(null)
   const animated = useRef(false)
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
 
-  // Inject styles client-side only — fixes Next.js hydration mismatch
   useEffect(() => {
     if (!document.getElementById('hero-styles')) {
       const el = document.createElement('style')
@@ -213,20 +374,16 @@ export default function Hero() {
       ([entry]) => {
         if (entry.isIntersecting && !animated.current) {
           animated.current = true
-
           statsRef.current
             ?.querySelectorAll('.stat-num')
             .forEach((el) => {
               const target = parseInt(el.dataset.target)
               const suffix = el.dataset.suffix
-
               let start = 0
               const step = Math.ceil(target / 40)
-
               const timer = setInterval(() => {
                 start = Math.min(start + step, target)
                 el.textContent = start + suffix
-
                 if (start >= target) clearInterval(timer)
               }, 30)
             })
@@ -234,18 +391,9 @@ export default function Hero() {
       },
       { threshold: 0.5 }
     )
-
     if (statsRef.current) observer.observe(statsRef.current)
-
     return () => observer.disconnect()
   }, [])
-
-  const handleMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setMouse({ x, y })
-  }
 
   const clearFocus = (e) => {
     e.currentTarget.blur()
@@ -254,74 +402,58 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      onMouseMove={handleMove}
       style={{
         background:
-          'linear-gradient(135deg, #f8fafc 0%, #fefce8 35%, #fff7ed 70%, #fdf2f8 100%)',
+          'linear-gradient(180deg, #fafbfc 0%, #f8fafc 100%)',
         padding: '110px 0 90px',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      {/* Glow Background follows mouse subtly */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '-180px',
-          left: '-120px',
-          width: 420,
-          height: 420,
-          background:
-            'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          transform: `translate(${mouse.x * 30}px, ${mouse.y * 30}px)`,
-          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Corner accent glows */}
+      <div className="premium-corner premium-corner-tl" />
+      <div className="premium-corner premium-corner-br" />
 
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '-180px',
-          right: '-120px',
-          width: 420,
-          height: 420,
-          background:
-            'radial-gradient(circle, rgba(249,115,22,0.16) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          transform: `translate(${mouse.x * -30}px, ${mouse.y * -30}px)`,
-          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Dot grid */}
+      <div className="premium-grid" />
 
-      {/* Soft decorative grid */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage:
-            'radial-gradient(circle at 1px 1px, rgba(15,23,42,0.06) 1px, transparent 0)',
-          backgroundSize: '32px 32px',
-          maskImage:
-            'radial-gradient(ellipse at center, black 30%, transparent 75%)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse at center, black 30%, transparent 75%)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* ─── Floating activity cards — scattered, no shared starting point ─── */}
+      {activityCards.map((card, i) => {
+        const positionStyle = card.left
+          ? { top: card.top, left: card.left }
+          : { top: card.top, right: card.right }
 
-      <div className="container position-relative text-center">
+        return (
+          <div
+            key={i}
+            className={`activity-card${card.hideTablet ? ' hide-tablet' : ''}`}
+            style={{
+              ...positionStyle,
+              animation: `${card.anim} ${card.duration}s ease-in-out ${card.delay}s infinite`,
+            }}
+          >
+            <div className="activity-icon" style={{ background: card.iconBg, color: '#fff' }}>
+              {card.icon}
+            </div>
+            <div className="activity-text">
+              <span className="activity-title">{card.title}</span>
+              <span className="activity-sub">{card.sub}</span>
+            </div>
+            {card.badge && (
+              <span
+                className="activity-badge"
+                style={{ color: card.badge.color, background: card.badge.bg }}
+              >
+                {card.badge.text}
+              </span>
+            )}
+          </div>
+        )
+      })}
+
+      <div className="container position-relative text-center" style={{ zIndex: 3 }}>
         {/* Badge */}
-        <div
-          className="hero-rise-1"
-          style={{
-            marginBottom: 26,
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="hero-rise-1" style={{ marginBottom: 26, display: 'flex', justifyContent: 'center' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -338,15 +470,7 @@ export default function Hero() {
             }}
           >
             <span style={{ fontSize: '1rem' }}>⭐</span>
-            <span
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.88rem',
-                fontWeight: 700,
-                color: '#2563eb',
-                letterSpacing: '0.2px',
-              }}
-            >
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.88rem', fontWeight: 700, color: '#2563eb', letterSpacing: '0.2px' }}>
               Zoho Authorized Partner
             </span>
           </div>
@@ -357,7 +481,7 @@ export default function Hero() {
           className="hero-rise-2"
           style={{
             fontFamily: 'Inter, sans-serif',
-            fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
+            fontSize: 'clamp(1.6rem, 4.3vw, 3rem)',
             fontWeight: 700,
             color: '#0f172a',
             marginBottom: 10,
@@ -371,8 +495,7 @@ export default function Hero() {
           Hire a Zoho developer who{' '}
           <span
             style={{
-              background:
-                'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
+              background: 'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
               backgroundSize: '200% 100%',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -419,27 +542,19 @@ export default function Hero() {
             marginBottom: 14,
           }}
         >
-          {/* Overlapping avatars */}
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {avatars.map((a, i) => (
               <div
                 key={a.initials}
                 style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: '50%',
-                  background: a.color,
-                  border: '2px solid #fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  width: 28, height: 28, borderRadius: '50%',
+                  background: a.color, border: '2px solid #fff',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
                   marginLeft: i === 0 ? 0 : -8,
                   zIndex: avatars.length - i,
                   position: 'relative',
                   fontFamily: 'Inter, sans-serif',
-                  fontSize: '0.6rem',
-                  fontWeight: 700,
-                  color: '#fff',
+                  fontSize: '0.6rem', fontWeight: 700, color: '#fff',
                   letterSpacing: '0.2px',
                   boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
                   transition: 'transform 0.2s ease',
@@ -459,64 +574,27 @@ export default function Hero() {
             ))}
           </div>
 
-          {/* Divider */}
-          <div
-            style={{
-              width: 1,
-              height: 16,
-              background: 'rgba(0,0,0,0.1)',
-              borderRadius: 1,
-            }}
-          />
+          <div style={{ width: 1, height: 16, background: 'rgba(0,0,0,0.1)', borderRadius: 1 }} />
 
-          {/* Stars */}
           <div style={{ display: 'flex', gap: 1 }}>
             {[1, 2, 3, 4, 5].map((s) => (
-              <span
-                key={s}
-                className="star-anim"
-                style={{ fontSize: '0.85rem', color: '#f59e0b', lineHeight: 1 }}
-              >
-                ★
-              </span>
+              <span key={s} className="star-anim" style={{ fontSize: '0.85rem', color: '#f59e0b', lineHeight: 1 }}>★</span>
             ))}
           </div>
 
-          {/* Rating */}
-          <span
-            style={{
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              color: '#0f172a',
-            }}
-          >
+          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', fontWeight: 700, color: '#0f172a' }}>
             4.8/5
           </span>
         </div>
 
-        {/* Primary CTA Buttons */}
-        <div
-          className="hero-rise-4"
-          style={{
-            display: 'flex',
-            gap: 12,
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            marginBottom: 20,
-          }}
-        >
+        {/* Primary CTA */}
+        <div className="hero-rise-4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 20 }}>
           <a
-            href ="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
+            href="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '13px 28px',
-              borderRadius: 12,
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.92rem',
-              fontWeight: 700,
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '13px 28px', borderRadius: 12,
+              fontFamily: 'Inter, sans-serif', fontSize: '0.92rem', fontWeight: 700,
               textDecoration: 'none',
               background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
               color: '#fff',
@@ -535,58 +613,11 @@ export default function Hero() {
             }}
           >
             Hire a Zoho Developer
-            <span style={{ fontSize: '1rem' }}></span>
-          </a>
-
-          <a
-            href="#pricing"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '13px 28px',
-              borderRadius: 12,
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.92rem',
-              fontWeight: 700,
-              textDecoration: 'none',
-              background: '#fff',
-              color: '#0f172a',
-              border: '1.5px solid rgba(15,23,42,0.12)',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.07)',
-              transition: 'all 0.22s cubic-bezier(0.22,1,0.36,1)',
-              letterSpacing: '0.1px',
-              WebkitTapHighlightColor: 'transparent',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.1)'
-              e.currentTarget.style.borderColor = 'rgba(37,99,235,0.25)'
-              e.currentTarget.style.color = '#2563eb'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.07)'
-              e.currentTarget.style.borderColor = 'rgba(15,23,42,0.12)'
-              e.currentTarget.style.color = '#0f172a'
-            }}
-          >
-            View Pricing
-            <span style={{ fontSize: '1rem' }}></span>
           </a>
         </div>
 
         {/* Contact Buttons */}
-        <div
-          className="hero-rise-5"
-          style={{
-            display: 'flex',
-            gap: 6,
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            marginBottom: 48,
-          }}
-        >
+        <div className="hero-rise-5" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 48 }}>
           {contactButtons.map((btn) => (
             <a
               key={btn.label}
@@ -602,7 +633,7 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* ── Stats Card ── */}
+        {/* Stats Card */}
         <div className="hero-rise-7" ref={statsRef}>
           <div className="stats-card">
             {stats.map((stat, i) => (
