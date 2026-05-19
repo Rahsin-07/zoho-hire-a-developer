@@ -108,8 +108,10 @@ export default function Comparison() {
     return () => observer.disconnect()
   }, [])
 
-  const GREEN = '#22c55e'
-  const ORANGE = '#f97316'
+  const GREEN = '#4ade80'
+  const LIGHT_GREEN = '#dcfce7'
+  const GREEN_HOVER = '#bbf7d0'
+
   const BLUE = '#3669d5'
   const BORDER = '#ece6dd'
   const TEXT = '#334155'
@@ -129,7 +131,7 @@ export default function Comparison() {
           <span className="section-label">Why Choose Us</span>
 
           <h2 className="section-title">
-            <span style={{ color: "#3669d5" }}>ZoFlowX</span> vs{' '}
+            <span style={{ color: '#3669d5' }}>ZoFlowX</span> vs{' '}
             <span style={{ color: 'black' }}>Freelancer</span> vs{' '}
             <span style={{ color: 'black' }}>In house developer</span>
           </h2>
@@ -177,41 +179,49 @@ export default function Comparison() {
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Inter, sans-serif',
-                      fontWeight: 700,
-                      fontSize: '1.05rem',
-                      color: 'Black',
                       borderBottom: `1px solid ${BORDER}`,
                       background: '#fff7ed'
                     }}
                   >
-                    Freelancer
+                    <h3
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 700,
+                        fontSize: '1.05rem',
+                        color: 'black',
+                        margin: 0
+                      }}
+                    >
+                      Freelancer
+                    </h3>
                   </th>
 
                   <th
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Inter, sans-serif',
-                      fontWeight: 700,
-                      fontSize: '1.05rem',
-                      color: 'BLACK',
                       borderBottom: `1px solid ${BORDER}`,
                       background: '#eff6ff'
                     }}
                   >
-                    In house developer
+                    <h3
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 700,
+                        fontSize: '1.05rem',
+                        color: 'black',
+                        margin: 0
+                      }}
+                    >
+                      In house developer
+                    </h3>
                   </th>
 
                   <th
                     style={{
                       padding: '28px 24px',
                       textAlign: 'center',
-                      fontFamily: 'Inter, sans-serif',
-                      fontWeight: 700,
-                      fontSize: '1.05rem',
-                      color: HEADING,
-                      background: '#f0fdf4',
+                      background: LIGHT_GREEN,
                       borderTop: `2px solid ${GREEN}`,
                       borderLeft: `2px solid ${GREEN}`,
                       borderRight: `2px solid ${GREEN}`,
@@ -225,15 +235,24 @@ export default function Comparison() {
                         alignItems: 'center',
                         gap: 10,
                         flexWrap: 'wrap',
-                        color:BLUE,
                         justifyContent: 'center'
                       }}
                     >
-                      <span>ZoFlowX</span>
+                      <h3
+                        style={{
+                          margin: 0,
+                          fontFamily: 'Inter, sans-serif',
+                          fontWeight: 700,
+                          fontSize: '1.05rem',
+                          color: BLUE
+                        }}
+                      >
+                        ZoFlowX
+                      </h3>
 
                       <span
                         style={{
-                          background: '#22c55e',
+                          background: GREEN,
                           color: '#fff',
                           fontSize: '0.68rem',
                           fontWeight: 700,
@@ -267,7 +286,7 @@ export default function Comparison() {
 
                   const highlightCell = {
                     ...baseCell,
-                    background: '#22c55e',
+                    background: LIGHT_GREEN,
                     borderLeft: `2px solid ${GREEN}`,
                     borderRight: `2px solid ${GREEN}`,
                     color: HEADING,
@@ -282,14 +301,15 @@ export default function Comparison() {
                   }
 
                   return (
-                    <tr key={i}
+                    <tr
+                      key={i}
                       onMouseEnter={e => {
                         const cells = e.currentTarget.querySelectorAll('td')
                         cells.forEach((c, idx) => {
                           if (idx === 0) c.style.background = '#f1f5f9'
                           else if (idx === 1) c.style.background = '#ffedd5'
                           else if (idx === 2) c.style.background = '#dbeafe'
-                          else c.style.background = '#dcfce7'
+                          else c.style.background = GREEN_HOVER
                         })
                       }}
                       onMouseLeave={e => {
@@ -298,7 +318,7 @@ export default function Comparison() {
                           if (idx === 0) c.style.background = '#f8fafc'
                           else if (idx === 1) c.style.background = '#fff7ed'
                           else if (idx === 2) c.style.background = '#eff6ff'
-                          else c.style.background = '#22c55e'
+                          else c.style.background = LIGHT_GREEN
                         })
                       }}
                     >
@@ -363,6 +383,7 @@ export default function Comparison() {
               50%      { background-position: 100% 50%; }
             }
           `}</style>
+
           <h3
             style={{
               color: '#fff',

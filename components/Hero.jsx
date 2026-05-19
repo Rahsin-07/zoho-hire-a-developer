@@ -1,5 +1,143 @@
 'use client'
+
 import { useEffect, useRef, useState } from 'react'
+
+const CSS = `
+  @keyframes heroRise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes badgePulse {
+    0%, 100% {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06), 0 0 0 0 rgba(37,99,235,0.35);
+    }
+    50% {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06), 0 0 0 10px rgba(37,99,235,0);
+    }
+  }
+  @keyframes heroGradShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes arrowSlide {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+  }
+  @keyframes starPop {
+    0% { transform: scale(0.6); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
+  .hero-rise-2 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.18s; }
+  .hero-rise-3 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.31s; }
+  .hero-rise-4 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.44s; }
+  .hero-rise-5 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.57s; }
+  .hero-rise-6 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.68s; }
+  .hero-rise-7 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.80s; }
+  .hero-arrow:hover .arrow-i { animation: arrowSlide 0.9s ease-in-out infinite; }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 10px;
+    font-family: Inter, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid rgba(15,23,42,0.1);
+    background: #fff;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.22,1,0.36,1);
+    white-space: nowrap;
+    letter-spacing: 0.1px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    outline: none;
+  }
+  .contact-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: rgba(37,99,235,0.22);
+    color: #1d4ed8;
+  }
+  .contact-btn-whatsapp {
+    background: #f0fdf4;
+    border-color: rgba(16,185,129,0.28);
+    color: #059669;
+  }
+  .contact-btn-whatsapp:hover {
+    background: #dcfce7;
+    border-color: rgba(16,185,129,0.45);
+    box-shadow: 0 4px 12px rgba(16,185,129,0.12);
+    color: #047857;
+  }
+  .star-anim { animation: starPop 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+  .star-anim:nth-child(1) { animation-delay: 0.72s; }
+  .star-anim:nth-child(2) { animation-delay: 0.80s; }
+  .star-anim:nth-child(3) { animation-delay: 0.88s; }
+  .star-anim:nth-child(4) { animation-delay: 0.96s; }
+  .star-anim:nth-child(5) { animation-delay: 1.04s; }
+  .stats-card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 120px;
+    position: relative;
+    padding: 8px 16px;
+  }
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 1px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 1px;
+  }
+  .stat-num-wrapper {
+    font-family: Inter, sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .stat-label {
+    font-family: Inter, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.1px;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .stats-card { padding: 20px 16px; gap: 8px; }
+    .stat-item { min-width: 80px; padding: 6px 8px; }
+    .stat-item:not(:last-child)::after { height: 30px; }
+  }
+`
 
 const stats = [
   { num: 100, suffix: '+', label: 'Projects Delivered' },
@@ -29,17 +167,46 @@ const avatars = [
 ]
 
 const contactButtons = [
-  { label: 'Call',      href: 'tel:+1234567890',          primary: false },
-  { label: 'WhatsApp',  href: 'https://wa.me/1234567890', primary: true  },
-  { label: 'Email',     href: 'mailto:hello@zoflowx.com', primary: false },
-  { label: 'Schedule',  href: 'https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation', primary: false },
-  { label: 'Live Chat', href: '#chat',                    primary: false },
+  { label: 'Call', href: 'tel:+918190009222', primary: false },
+  {
+    label: 'WhatsApp',
+    href: 'https://wa.me/918190009222',
+    primary: true,
+  },
+  { label: 'Email', href: 'mailto:hello@zoflowx.com', primary: false },
+  {
+    label: 'Schedule',
+    href: 'https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation',
+    primary: false,
+  },
+  { label: 'Live Chat', href: '#chat', primary: false },
+]
+
+// Gradient colors for stat numbers — cycling through brand palette
+const statColors = [
+  'linear-gradient(135deg, #f97316 0%, #ef4444 100%)',
+  'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
+  'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+  'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
 ]
 
 export default function Hero() {
   const statsRef = useRef(null)
   const animated = useRef(false)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
+
+  // Inject styles client-side only — fixes Next.js hydration mismatch
+  useEffect(() => {
+    if (!document.getElementById('hero-styles')) {
+      const el = document.createElement('style')
+      el.id = 'hero-styles'
+      el.textContent = CSS
+      document.head.appendChild(el)
+    }
+    return () => {
+      document.getElementById('hero-styles')?.remove()
+    }
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -59,6 +226,7 @@ export default function Hero() {
               const timer = setInterval(() => {
                 start = Math.min(start + step, target)
                 el.textContent = start + suffix
+
                 if (start >= target) clearInterval(timer)
               }, 30)
             })
@@ -79,6 +247,10 @@ export default function Hero() {
     setMouse({ x, y })
   }
 
+  const clearFocus = (e) => {
+    e.currentTarget.blur()
+  }
+
   return (
     <section
       id="hero"
@@ -91,7 +263,6 @@ export default function Hero() {
         overflow: 'hidden',
       }}
     >
-
       {/* Glow Background follows mouse subtly */}
       <div
         style={{
@@ -141,113 +312,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Floating Zoho Product Images */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Commented out as in original */}
-      </div>
-
-      <style>{`
-        @keyframes float0 {
-          0%   { transform: translate(0px, 0px); }
-          25%  { transform: translate(18px, -10px); }
-          50%  { transform: translate(30px, -6px); }
-          75%  { transform: translate(12px, -14px); }
-          100% { transform: translate(0px, 0px); }
-        }
-        @keyframes float1 {
-          0%   { transform: translate(0px, 0px); }
-          25%  { transform: translate(-20px, -12px); }
-          50%  { transform: translate(-35px, -6px); }
-          75%  { transform: translate(-15px, -16px); }
-          100% { transform: translate(0px, 0px); }
-        }
-        @keyframes float2 {
-          0%   { transform: translate(0px, 0px); }
-          25%  { transform: translate(22px, -8px); }
-          50%  { transform: translate(10px, -14px); }
-          75%  { transform: translate(28px, -4px); }
-          100% { transform: translate(0px, 0px); }
-        }
-        @keyframes heroRise {
-          from { opacity: 0; transform: translateY(18px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes badgePulse {
-          0%, 100% { box-shadow: 0 8px 24px rgba(0,0,0,0.06), 0 0 0 0 rgba(37,99,235,0.35); }
-          50%      { box-shadow: 0 8px 24px rgba(0,0,0,0.06), 0 0 0 10px rgba(37,99,235,0); }
-        }
-        @keyframes heroGradShift {
-          0%, 100% { background-position: 0% 50%; }
-          50%      { background-position: 100% 50%; }
-        }
-        @keyframes arrowSlide {
-          0%, 100% { transform: translateX(0); }
-          50%      { transform: translateX(5px); }
-        }
-        @keyframes starPop {
-          0%   { transform: scale(0.6); opacity: 0; }
-          70%  { transform: scale(1.15); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-        .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
-        .hero-rise-2 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.18s; }
-        .hero-rise-3 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.31s; }
-        .hero-rise-4 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.44s; }
-        .hero-rise-5 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.57s; }
-        .hero-rise-6 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.68s; }
-        .hero-arrow:hover .arrow-i { animation: arrowSlide 0.9s ease-in-out infinite; }
-        .contact-btn {
-          display: inline-flex;
-          align-items: center;
-          padding: 7px 16px;
-          border-radius: 10px;
-          font-family: Inter, sans-serif;
-          font-size: 0.82rem;
-          font-weight: 600;
-          text-decoration: none;
-          border: 1.5px solid rgba(15,23,42,0.1);
-          background: #fff;
-          color: #374151;
-          cursor: pointer;
-          transition: all 0.22s cubic-bezier(0.22,1,0.36,1);
-          white-space: nowrap;
-          letter-spacing: 0.1px;
-          box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-        }
-        .contact-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          border-color: rgba(37,99,235,0.22);
-          color: #1d4ed8;
-        }
-        .contact-btn-whatsapp {
-          background: #f0fdf4;
-          border-color: rgba(16,185,129,0.28);
-          color: #059669;
-        }
-        .contact-btn-whatsapp:hover {
-          background: #dcfce7;
-          border-color: rgba(16,185,129,0.45);
-          box-shadow: 0 4px 12px rgba(16,185,129,0.12);
-          color: #047857;
-        }
-        .star-anim { animation: starPop 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-        .star-anim:nth-child(1) { animation-delay: 0.72s; }
-        .star-anim:nth-child(2) { animation-delay: 0.80s; }
-        .star-anim:nth-child(3) { animation-delay: 0.88s; }
-        .star-anim:nth-child(4) { animation-delay: 0.96s; }
-        .star-anim:nth-child(5) { animation-delay: 1.04s; }
-      `}</style>
-
       <div className="container position-relative text-center">
-
         {/* Badge */}
         <div
           className="hero-rise-1"
@@ -271,8 +336,6 @@ export default function Hero() {
               transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1)',
               cursor: 'default',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)' }}
           >
             <span style={{ fontSize: '1rem' }}>⭐</span>
             <span
@@ -297,11 +360,12 @@ export default function Hero() {
             fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
             fontWeight: 500,
             color: '#0f172a',
-            marginBottom: 22,
+            marginBottom: 10,
             letterSpacing: '-1.2px',
-            lineHeight: 1.0,
+            lineHeight: 1.25,
             maxWidth: 980,
             marginInline: 'auto',
+            overflow: 'visible',
           }}
         >
           Hire a Zoho developer who{' '}
@@ -315,272 +379,253 @@ export default function Hero() {
               backgroundClip: 'text',
               animation: 'heroGradShift 6s ease-in-out infinite',
               display: 'inline-block',
+              paddingBottom: '0.1em',
             }}
           >
             actually builds
           </span>
         </h1>
 
-        {/* Paragraph */}
+        {/* Subtitle */}
         <p
           className="hero-rise-3"
           style={{
-            fontSize: '1.05rem',
-            color: '#64748b',
-            maxWidth: 820,
-            margin: '0 auto 18px',
-            lineHeight: 1.30,
             fontFamily: 'Inter, sans-serif',
-            fontWeight: 500,
-          }}
-        >
-          At ZoFlowX, we help businesses hire a Zoho developer to build
-          powerful, cloud based CRM, web, and mobile applications. Our
-          certified Zoho Creator experts design tailored solutions that
-          streamline operations, eliminate manual tasks, and support long
-          term growth. From startups to scaling enterprises, we deliver flexible,
-          scalable Zoho solutions built around your exact business needs.
-        </p>
-
-        <p
-          className="hero-rise-3"
-          style={{
-            fontSize: '1.02rem',
-            color: '#64748b',
-            maxWidth: 820,
-            margin: '0 auto 38px',
-            lineHeight: 1.30,
-            fontFamily: 'Inter, sans-serif',
+            fontSize: 'clamp(0.95rem, 1.6vw, 1.1rem)',
             fontWeight: 400,
+            color: '#64748b',
+            marginBottom: 28,
+            maxWidth: 540,
+            marginInline: 'auto',
+            lineHeight: 1.65,
           }}
         >
+          We implement, customize and automate Zoho so your business runs smoother not just looks like it does.
         </p>
 
-        {/* ── Unified CTA + Social Proof Block ── */}
+        {/* Avatars + Stars pill */}
+        <div
+          className="hero-rise-5"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 10,
+            background: 'rgba(255,255,255,0.8)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(0,0,0,0.07)',
+            borderRadius: 999,
+            padding: '6px 14px 6px 6px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+            marginBottom: 14,
+          }}
+        >
+          {/* Overlapping avatars */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {avatars.map((a, i) => (
+              <div
+                key={a.initials}
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: '50%',
+                  background: a.color,
+                  border: '2px solid #fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: i === 0 ? 0 : -8,
+                  zIndex: avatars.length - i,
+                  position: 'relative',
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '0.6rem',
+                  fontWeight: 700,
+                  color: '#fff',
+                  letterSpacing: '0.2px',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
+                  transition: 'transform 0.2s ease',
+                  cursor: 'default',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.12)'
+                  e.currentTarget.style.zIndex = 99
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.zIndex = avatars.length - i
+                }}
+              >
+                {a.initials}
+              </div>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div
+            style={{
+              width: 1,
+              height: 16,
+              background: 'rgba(0,0,0,0.1)',
+              borderRadius: 1,
+            }}
+          />
+
+          {/* Stars */}
+          <div style={{ display: 'flex', gap: 1 }}>
+            {[1, 2, 3, 4, 5].map((s) => (
+              <span
+                key={s}
+                className="star-anim"
+                style={{ fontSize: '0.85rem', color: '#f59e0b', lineHeight: 1 }}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          {/* Rating */}
+          <span
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              color: '#0f172a',
+            }}
+          >
+            4.8/5
+          </span>
+        </div>
+
+        {/* Primary CTA Buttons */}
         <div
           className="hero-rise-4"
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 14,
-            marginBottom: 48,
+            gap: 12,
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            marginBottom: 20,
           }}
         >
-          {/* Row 1: CTA Buttons — same height, matched radius */}
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a
-              className="hero-arrow"
-              href="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
-              style={{
-                background: 'linear-gradient(135deg, #1d4ed8, #2563eb)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 14,
-                padding: '13px 28px',
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 700,
-                fontSize: '0.95rem',
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                boxShadow: '0 8px 24px rgba(37,99,235,0.32)',
-                transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 14px 32px rgba(37,99,235,0.42)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,99,235,0.32)'
-              }}
-            >
-              Hire a Zoho Developer
-              <span className="arrow-i">→</span>
-            </a>
-
-            <a
-              href="#pricing"
-              style={{
-                background: '#fff',
-                color: '#0f172a',
-                border: '1.5px solid rgba(15,23,42,0.12)',
-                borderRadius: 14,
-                padding: '13px 28px',
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 600,
-                fontSize: '0.95rem',
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.borderColor = 'rgba(37,99,235,0.35)'
-                e.currentTarget.style.boxShadow = '0 6px 18px rgba(37,99,235,0.1)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.borderColor = 'rgba(15,23,42,0.12)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'
-              }}
-            >
-              View Pricing
-            </a>
-          </div>
-
-          {/* Row 2: Avatars + Stars — compact inline pill */}
-          <div
-            className="hero-rise-5"
+          <a
+            href="#contact"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 10,
-              background: 'rgba(255,255,255,0.8)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(0,0,0,0.07)',
-              borderRadius: 999,
-              padding: '6px 14px 6px 6px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+              gap: 8,
+              padding: '13px 28px',
+              borderRadius: 12,
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '0.92rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+              color: '#fff',
+              boxShadow: '0 4px 18px rgba(37,99,235,0.32)',
+              transition: 'all 0.22s cubic-bezier(0.22,1,0.36,1)',
+              letterSpacing: '0.1px',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,99,235,0.42)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 4px 18px rgba(37,99,235,0.32)'
             }}
           >
-            {/* Overlapping avatars */}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              {avatars.map((a, i) => (
-                <div
-                  key={a.initials}
-                  style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: '50%',
-                    background: a.color,
-                    border: '2px solid #fff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: i === 0 ? 0 : -8,
-                    zIndex: avatars.length - i,
-                    position: 'relative',
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '0.6rem',
-                    fontWeight: 700,
-                    color: '#fff',
-                    letterSpacing: '0.2px',
-                    boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
-                    transition: 'transform 0.2s ease',
-                    cursor: 'default',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.12)'; e.currentTarget.style.zIndex = 99 }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.zIndex = avatars.length - i }}
-                >
-                  {a.initials}
-                </div>
-              ))}
-            </div>
+            Contact Zoho Developer
+            <span style={{ fontSize: '1rem' }}></span>
+          </a>
 
-            {/* Divider */}
-            <div style={{ width: 1, height: 16, background: 'rgba(0,0,0,0.1)', borderRadius: 1 }} />
-
-            {/* Stars */}
-            <div style={{ display: 'flex', gap: 1 }}>
-              {[1,2,3,4,5].map((s) => (
-                <span key={s} className="star-anim" style={{ fontSize: '0.85rem', color: '#f59e0b', lineHeight: 1 }}>★</span>
-              ))}
-            </div>
-
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', fontWeight: 700, color: '#0f172a' }}>
-              4.8/5
-            </span>
-          </div>
-
-          {/* Row 3: Contact buttons — small, tight, consistent */}
-          <div
-            className="hero-rise-5"
-            style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center' }}
+          <a
+            href="#pricing"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '13px 28px',
+              borderRadius: 12,
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '0.92rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              background: '#fff',
+              color: '#0f172a',
+              border: '1.5px solid rgba(15,23,42,0.12)',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.07)',
+              transition: 'all 0.22s cubic-bezier(0.22,1,0.36,1)',
+              letterSpacing: '0.1px',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.1)'
+              e.currentTarget.style.borderColor = 'rgba(37,99,235,0.25)'
+              e.currentTarget.style.color = '#2563eb'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.07)'
+              e.currentTarget.style.borderColor = 'rgba(15,23,42,0.12)'
+              e.currentTarget.style.color = '#0f172a'
+            }}
           >
-            {contactButtons.map((btn) => (
-              <a
-                key={btn.label}
-                href={btn.href}
-                className={`contact-btn${btn.primary ? ' contact-btn-whatsapp' : ''}`}
-              >
-                {btn.label}
-              </a>
-            ))}
-          </div>
+            View Pricing
+            <span style={{ fontSize: '1rem' }}></span>
+          </a>
         </div>
 
-        {/* Stats */}
+        {/* Contact Buttons */}
         <div
-          ref={statsRef}
-          className="hero-rise-6"
+          className="hero-rise-5"
           style={{
             display: 'flex',
-            justifyContent: 'space-around',
-            gap: 48,
+            gap: 6,
             flexWrap: 'wrap',
-            padding: '34px 40px',
-            background: 'rgba(255,255,255,0.7)',
-            backdropFilter: 'blur(14px)',
-            border: '1px solid rgba(255,255,255,0.8)',
-            borderRadius: 28,
-            width: '90vw',
-            maxWidth: 'none',
-            margin: '0 auto',
-            boxSizing: 'border-box',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.08)',
-            transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s cubic-bezier(0.22,1,0.36,1)',
+            justifyContent: 'center',
+            marginBottom: 48,
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 28px 70px rgba(0,0,0,0.12)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 20px 60px rgba(0,0,0,0.08)' }}
         >
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              style={{
-                textAlign: 'center',
-                minWidth: 120,
-                transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1)',
-                cursor: 'default',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+          {contactButtons.map((btn) => (
+            <a
+              key={btn.label}
+              href={btn.href}
+              className={`contact-btn${btn.primary ? ' contact-btn-whatsapp' : ''}`}
+              onTouchEnd={clearFocus}
+              onMouseUp={clearFocus}
+              target={btn.label === 'WhatsApp' ? '_blank' : undefined}
+              rel={btn.label === 'WhatsApp' ? 'noopener noreferrer' : undefined}
             >
-              <div
-                className="stat-num"
-                data-target={s.num}
-                data-suffix={s.suffix}
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '2.4rem',
-                  fontWeight: 800,
-                  background: 'linear-gradient(90deg, #2563eb,#eab308, #f97316, #ef4444)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  lineHeight: 1,
-                  letterSpacing: '-1px',
-                }}
-              >
-                0{s.suffix}
-              </div>
-              <div
-                style={{
-                  fontSize: '0.88rem',
-                  color: '#64748b',
-                  marginTop: 8,
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: 600,
-                }}
-              >
-                {s.label}
-              </div>
-            </div>
+              {btn.label}
+            </a>
           ))}
+        </div>
+
+        {/* ── Stats Card ── */}
+        <div className="hero-rise-7" ref={statsRef}>
+          <div className="stats-card">
+            {stats.map((stat, i) => (
+              <div key={stat.label} className="stat-item">
+                <div className="stat-num-wrapper">
+                  <span
+                    className="stat-num"
+                    data-target={stat.num}
+                    data-suffix={stat.suffix}
+                    style={{
+                      background: statColors[i],
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                  >
+                    0{stat.suffix}
+                  </span>
+                </div>
+                <span className="stat-label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

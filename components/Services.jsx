@@ -153,7 +153,7 @@ function ServiceCard({ icon, title, desc, delay, index }) {
         </div>
 
         {/* Title */}
-        <div
+        <h3
           className="svc-title"
           style={{
             fontSize: '1rem',
@@ -162,10 +162,11 @@ function ServiceCard({ icon, title, desc, delay, index }) {
             color: '#0f172a',
             transition: 'color 0.3s ease',
             fontFamily: 'Inter, sans-serif',
+            lineHeight: 1.4,
           }}
         >
           {title}
-        </div>
+        </h3>
 
         {/* Desc */}
         <div
@@ -247,7 +248,7 @@ export default function Services() {
         </div>
 
         {/* Cards */}
-        <h3 className="row g-4">
+        <div className="row g-4">
           {services.map((s, i) => (
             <ServiceCard
               key={s.title}
@@ -256,88 +257,88 @@ export default function Services() {
               delay={i * 0.15}
             />
           ))}
-        </h3>
+        </div>
 
         {/* CTA */}
-      <div
-  className="fade-up"
-  style={{
-    marginTop: 40,
-    padding: 52,
-    borderRadius: 'var(--radius-lg)',
-    background: 'linear-gradient(135deg, #2563eb, #0f172a)',
-    color: '#fff',
-    textAlign: 'center',
-    boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
-    position: 'relative',
-    overflow: 'hidden',
-  }}
->
-  {/* glow overlay */}
-  <div
-    style={{
-      position: 'absolute',
-      inset: 0,
-      background:
-        'radial-gradient(circle at top left, rgba(37,99,235,0.25), transparent 60%)',
-      pointerEvents: 'none',
-    }}
-  />
+        <div
+          className="fade-up"
+          style={{
+            marginTop: 40,
+            padding: 52,
+            borderRadius: 'var(--radius-lg)',
+            background: 'linear-gradient(135deg, #2563eb, #0f172a)',
+            color: '#fff',
+            textAlign: 'center',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* glow overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at top left, rgba(37,99,235,0.25), transparent 60%)',
+              pointerEvents: 'none',
+            }}
+          />
 
-  {/* Title */}
- <h4
-  style={{
-    fontSize: '1.9rem',
-    fontWeight: 800,
-    fontFamily: 'Inter, sans-serif',
-    color: '#ffffff',
-    position: 'relative',
-  }}
->
-  Got a Zoho problem? We’ll build the solution.
-</h4>
+          {/* Title */}
+          <h4
+            style={{
+              fontSize: '1.9rem',
+              fontWeight: 800,
+              fontFamily: 'Inter, sans-serif',
+              color: '#ffffff',
+              position: 'relative',
+            }}
+          >
+            Got a Zoho problem? We’ll build the solution.
+          </h4>
 
-  {/* Subtitle */}
-  <p
-    style={{
-      opacity: 0.9,
-      marginTop: 12,
-      fontSize: '1rem',
-      fontFamily: 'Inter, sans-serif',
-      position: 'relative',
-      color: 'rgba(255,255,255,0.85)',
-    }}
-  >
-    Custom CRM, automation, integrations everything built for your workflow.
-  </p>
+          {/* Subtitle */}
+          <p
+            style={{
+              opacity: 0.9,
+              marginTop: 12,
+              fontSize: '1rem',
+              fontFamily: 'Inter, sans-serif',
+              position: 'relative',
+              color: 'rgba(255,255,255,0.85)',
+            }}
+          >
+            Custom CRM, automation, integrations everything built for your workflow.
+          </p>
 
-  {/* Button */}
-  <a
-    href="#consultation"
-    style={{
-      display: 'inline-block',
-      marginTop: 24,
-      background: '#fff',
-      color: '#0f172a',
-      padding: '13px 28px',
-      borderRadius: 14,
-      fontWeight: 800,
-      textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      position: 'relative',
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)'
-      e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.3)'
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.transform = 'translateY(0) scale(1)'
-      e.currentTarget.style.boxShadow = 'none'
-    }}
-  >
-    Talk to Expert
-  </a>
-</div>
+          {/* Button */}
+          <a
+            href="#consultation"
+            style={{
+              display: 'inline-block',
+              marginTop: 24,
+              background: '#fff',
+              color: '#0f172a',
+              padding: '13px 28px',
+              borderRadius: 14,
+              fontWeight: 800,
+              textDecoration: 'none',
+              transition: 'all 0.3s ease',
+              position: 'relative',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)'
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.3)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)'
+              e.currentTarget.style.boxShadow = 'none'
+            }}
+          >
+            Talk to Expert
+          </a>
+        </div>
       </div>
     </section>
   )

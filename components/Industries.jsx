@@ -174,17 +174,20 @@ export default function Industries() {
                 </div>
 
                 {/* Title */}
-                <div className="ind-title" style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '1rem',
-                  fontWeight: 700,
-                  color: '#0f172a',
-                  marginBottom: 10,
-                  lineHeight: 1.3,
-                  transition: 'color 0.35s ease',
-                }}>
+                <h3
+                  className="ind-title"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    color: '#0f172a',
+                    marginBottom: 10,
+                    lineHeight: 1.3,
+                    transition: 'color 0.35s ease',
+                  }}
+                >
                   {ind.title}
-                </div>
+                </h3>
 
                 {/* Desc */}
                 <div style={{
@@ -229,7 +232,7 @@ export default function Industries() {
             }
           `}</style>
 
-          <h4 style={{
+          <h3 style={{
             color: '#fff',
             fontFamily: 'Inter, sans-serif',
             marginBottom: 12,
@@ -238,7 +241,7 @@ export default function Industries() {
             position: 'relative',
           }}>
             Can't find your industry above?
-          </h4>
+          </h3>
 
           <p style={{
             color: 'rgba(255,255,255,0.72)',

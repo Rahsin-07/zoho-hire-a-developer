@@ -12,7 +12,7 @@ const testimonials = [
     initials: 'SS',
     color: '#10b981',
     name: 'Sankara Subramanian A',
-    role: 'Client',
+    role: 'Founder , TN SPACES',
     text: 'ZoFlowX sets a benchmark as one of the best Zoho partners in Chennai. Their expertise and customer-first mindset make them trusted consultants.',
   },
   {
