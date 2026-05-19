@@ -395,7 +395,7 @@ export default function Hero() {
             fontWeight: 400,
             color: '#64748b',
             marginBottom: 28,
-            maxWidth: 540,
+            maxWidth: 740,
             marginInline: 'auto',
             lineHeight: 1.65,
           }}
