@@ -25,27 +25,72 @@ const CSS = `
     100% { transform: scale(1); opacity: 1; }
   }
 
-  /* ─── Card floats in place — appears, drifts gently, fades out, repeats ─── */
+  /* ─── New floating styles — smooth orbital drift with rotation & scale ─── */
   @keyframes cardFloatA {
-    0% { transform: translateY(20px) translateX(0); opacity: 0; }
-    15% { opacity: 0.85; }
-    50% { transform: translateY(-15px) translateX(8px); opacity: 0.9; }
-    85% { opacity: 0.85; }
-    100% { transform: translateY(-30px) translateX(-5px); opacity: 0; }
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(0.9);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.95;
+      transform: translate(12px, -8px) rotate(1.5deg) scale(1);
+    }
+    50% {
+      transform: translate(20px, -22px) rotate(-1deg) scale(1.02);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.9;
+      transform: translate(8px, -32px) rotate(1deg) scale(1);
+    }
+    100% {
+      transform: translate(-5px, -45px) rotate(0deg) scale(0.92);
+      opacity: 0;
+    }
   }
   @keyframes cardFloatB {
-    0% { transform: translateY(-20px) translateX(0); opacity: 0; }
-    15% { opacity: 0.85; }
-    50% { transform: translateY(10px) translateX(-10px); opacity: 0.9; }
-    85% { opacity: 0.85; }
-    100% { transform: translateY(25px) translateX(6px); opacity: 0; }
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(0.9);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.95;
+      transform: translate(-10px, 10px) rotate(-1.5deg) scale(1);
+    }
+    50% {
+      transform: translate(-18px, 18px) rotate(1deg) scale(1.02);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.9;
+      transform: translate(-6px, 28px) rotate(-1deg) scale(1);
+    }
+    100% {
+      transform: translate(8px, 40px) rotate(0deg) scale(0.92);
+      opacity: 0;
+    }
   }
   @keyframes cardFloatC {
-    0% { transform: translateY(15px) translateX(-10px); opacity: 0; }
-    15% { opacity: 0.85; }
-    50% { transform: translateY(-10px) translateX(10px); opacity: 0.9; }
-    85% { opacity: 0.85; }
-    100% { transform: translateY(-25px) translateX(0); opacity: 0; }
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(0.9);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.95;
+      transform: translate(-12px, -8px) rotate(2deg) scale(1);
+    }
+    50% {
+      transform: translate(14px, -18px) rotate(-1.5deg) scale(1.03);
+      opacity: 1;
+    }
+    80% {
+      opacity: 0.9;
+      transform: translate(-8px, -28px) rotate(1.5deg) scale(1);
+    }
+    100% {
+      transform: translate(6px, -40px) rotate(0deg) scale(0.92);
+      opacity: 0;
+    }
   }
 
   .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
@@ -175,6 +220,7 @@ const CSS = `
     pointer-events: none;
     will-change: transform, opacity;
     opacity: 0;
+    z-index: 2;
   }
   .activity-icon {
     width: 26px;
@@ -235,13 +281,42 @@ const CSS = `
     .activity-card.hide-tablet { display: none; }
   }
   @media (max-width: 768px) {
-    .activity-card { transform: scale(0.85); }
+    .activity-card { transform: scale(0.8); }
   }
   @media (max-width: 600px) {
     .stats-card { padding: 20px 16px; gap: 8px; }
     .stat-item { min-width: 80px; padding: 6px 8px; }
     .stat-item:not(:last-child)::after { height: 30px; }
-    .activity-card { display: none; }
+    /* Mobile: keep activity cards visible but smaller and compact */
+    .activity-card {
+      padding: 6px 9px;
+      gap: 6px;
+      font-size: 0.62rem;
+      border-radius: 9px;
+      max-width: 42vw;
+      overflow: hidden;
+    }
+    .activity-card .activity-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 0.65rem;
+      border-radius: 6px;
+    }
+    .activity-card .activity-title { font-size: 0.62rem; }
+    .activity-card .activity-sub { font-size: 0.54rem; }
+    .activity-card .activity-badge {
+      padding: 1px 4px;
+      font-size: 0.5rem;
+    }
+    /* Hide cards marked as hide-tablet on mobile too to avoid clutter */
+    .activity-card.hide-tablet { display: none; }
+  }
+  @media (max-width: 380px) {
+    .activity-card {
+      max-width: 38vw;
+      padding: 5px 7px;
+    }
+    .activity-card .activity-sub { display: none; }
   }
 `
 
