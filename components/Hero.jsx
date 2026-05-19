@@ -358,7 +358,7 @@ export default function Hero() {
           style={{
             fontFamily: 'Inter, sans-serif',
             fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
-            fontWeight: 500,
+            fontWeight: 700,
             color: '#0f172a',
             marginBottom: 10,
             letterSpacing: '-1.2px',
