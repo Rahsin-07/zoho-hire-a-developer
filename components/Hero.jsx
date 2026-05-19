@@ -25,74 +25,6 @@ const CSS = `
     100% { transform: scale(1); opacity: 1; }
   }
 
-  /* ─── New floating styles — smooth orbital drift with rotation & scale ─── */
-  @keyframes cardFloatA {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(0.9);
-      opacity: 0;
-    }
-    20% {
-      opacity: 0.95;
-      transform: translate(12px, -8px) rotate(1.5deg) scale(1);
-    }
-    50% {
-      transform: translate(20px, -22px) rotate(-1deg) scale(1.02);
-      opacity: 1;
-    }
-    80% {
-      opacity: 0.9;
-      transform: translate(8px, -32px) rotate(1deg) scale(1);
-    }
-    100% {
-      transform: translate(-5px, -45px) rotate(0deg) scale(0.92);
-      opacity: 0;
-    }
-  }
-  @keyframes cardFloatB {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(0.9);
-      opacity: 0;
-    }
-    20% {
-      opacity: 0.95;
-      transform: translate(-10px, 10px) rotate(-1.5deg) scale(1);
-    }
-    50% {
-      transform: translate(-18px, 18px) rotate(1deg) scale(1.02);
-      opacity: 1;
-    }
-    80% {
-      opacity: 0.9;
-      transform: translate(-6px, 28px) rotate(-1deg) scale(1);
-    }
-    100% {
-      transform: translate(8px, 40px) rotate(0deg) scale(0.92);
-      opacity: 0;
-    }
-  }
-  @keyframes cardFloatC {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(0.9);
-      opacity: 0;
-    }
-    20% {
-      opacity: 0.95;
-      transform: translate(-12px, -8px) rotate(2deg) scale(1);
-    }
-    50% {
-      transform: translate(14px, -18px) rotate(-1.5deg) scale(1.03);
-      opacity: 1;
-    }
-    80% {
-      opacity: 0.9;
-      transform: translate(-8px, -28px) rotate(1.5deg) scale(1);
-    }
-    100% {
-      transform: translate(6px, -40px) rotate(0deg) scale(0.92);
-      opacity: 0;
-    }
-  }
-
   .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
   .hero-rise-2 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.18s; }
   .hero-rise-3 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.31s; }
@@ -199,64 +131,74 @@ const CSS = `
     text-align: center;
   }
 
-  /* ─── Floating activity cards ─── */
-  .activity-card {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: 12px;
-    padding: 10px 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-    font-family: Inter, sans-serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #334155;
-    white-space: nowrap;
-    pointer-events: none;
-    will-change: transform, opacity;
-    opacity: 0;
-    z-index: 2;
-  }
-  .activity-icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 0.85rem;
-  }
-  .activity-text { display: flex; flex-direction: column; gap: 1px; }
-  .activity-title { font-size: 0.78rem; font-weight: 700; color: #0f172a; line-height: 1.2; }
-  .activity-sub { font-size: 0.68rem; font-weight: 500; color: #64748b; line-height: 1.2; }
-  .activity-badge {
-    padding: 2px 7px;
-    border-radius: 6px;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-
-  /* Premium background layers */
-  .premium-grid {
+  /* ─── Static glowing grid ─── */
+  .glow-grid {
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle at 1px 1px, rgba(15,23,42,0.10) 1px, transparent 0);
-    background-size: 28px 28px;
-    mask-image:
-      radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
-    -webkit-mask-image:
-      radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 80%);
+      linear-gradient(to right, rgba(37,99,235,0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(37,99,235,0.12) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center center;
+    mask-image: radial-gradient(
+      ellipse 75% 65% at 50% 50%,
+      black 0%,
+      black 30%,
+      transparent 85%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 75% 65% at 50% 50%,
+      black 0%,
+      black 30%,
+      transparent 85%
+    );
     pointer-events: none;
+    z-index: 1;
   }
+
+  /* Soft central glow that makes the grid feel luminous */
+  .glow-spotlight {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(139,92,246,0.10) 0%,
+      rgba(59,130,246,0.08) 25%,
+      transparent 65%
+    );
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Subtle accent dots at grid intersections — gives extra depth */
+  .glow-grid-dots {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(37,99,235,0.18) 1.5px, transparent 0);
+    background-size: 56px 56px;
+    background-position: center center;
+    mask-image: radial-gradient(
+      ellipse 60% 50% at 50% 50%,
+      black 0%,
+      black 20%,
+      transparent 75%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 60% 50% at 50% 50%,
+      black 0%,
+      black 20%,
+      transparent 75%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .premium-corner {
     position: absolute;
     width: 500px;
@@ -264,59 +206,34 @@ const CSS = `
     border-radius: 50%;
     filter: blur(80px);
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.55;
+    z-index: 0;
   }
   .premium-corner-tl {
     top: -200px;
     left: -200px;
-    background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
   }
   .premium-corner-br {
     bottom: -200px;
     right: -200px;
-    background: radial-gradient(circle, rgba(249,115,22,0.22) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(249,115,22,0.24) 0%, transparent 70%);
   }
 
-  @media (max-width: 1024px) {
-    .activity-card.hide-tablet { display: none; }
-  }
   @media (max-width: 768px) {
-    .activity-card { transform: scale(0.8); }
+    .glow-grid,
+    .glow-grid-dots {
+      background-size: 40px 40px;
+    }
   }
   @media (max-width: 600px) {
     .stats-card { padding: 20px 16px; gap: 8px; }
     .stat-item { min-width: 80px; padding: 6px 8px; }
     .stat-item:not(:last-child)::after { height: 30px; }
-    /* Mobile: keep activity cards visible but smaller and compact */
-    .activity-card {
-      padding: 6px 9px;
-      gap: 6px;
-      font-size: 0.62rem;
-      border-radius: 9px;
-      max-width: 42vw;
-      overflow: hidden;
+    .glow-grid,
+    .glow-grid-dots {
+      background-size: 32px 32px;
     }
-    .activity-card .activity-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 0.65rem;
-      border-radius: 6px;
-    }
-    .activity-card .activity-title { font-size: 0.62rem; }
-    .activity-card .activity-sub { font-size: 0.54rem; }
-    .activity-card .activity-badge {
-      padding: 1px 4px;
-      font-size: 0.5rem;
-    }
-    /* Hide cards marked as hide-tablet on mobile too to avoid clutter */
-    .activity-card.hide-tablet { display: none; }
-  }
-  @media (max-width: 380px) {
-    .activity-card {
-      max-width: 38vw;
-      padding: 5px 7px;
-    }
-    .activity-card .activity-sub { display: none; }
   }
 `
 
@@ -348,84 +265,6 @@ const statColors = [
   'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
   'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
   'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
-]
-
-/* ──────────────────────────────────────────────────────────────
-   Activity cards — placed at scattered positions on left & right
-   sides of the hero, each floats gently in place with its own
-   timing so they appear/disappear randomly.
-   ────────────────────────────────────────────────────────────── */
-const activityCards = [
-  // ── LEFT SIDE ──
-  {
-    icon: '⚡', iconBg: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-    title: 'Workflow triggered', sub: 'Lead → Sales',
-    badge: null,
-    top: '12%', left: '3%',
-    anim: 'cardFloatA', duration: 9, delay: 0,
-  },
-  {
-    icon: '₹', iconBg: 'linear-gradient(135deg, #10b981, #059669)',
-    title: 'Invoice #INV-2847', sub: '₹45,000 received',
-    badge: { text: 'Paid', color: '#059669', bg: '#d1fae5' },
-    top: '38%', left: '1%',
-    anim: 'cardFloatB', duration: 11, delay: 3,
-  },
-  {
-    icon: '📊', iconBg: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
-    title: 'Q4 Sales Report', sub: '+24% MoM growth',
-    badge: null,
-    top: '68%', left: '4%',
-    anim: 'cardFloatC', duration: 10, delay: 6,
-    hideTablet: true,
-  },
-  {
-    icon: '📝', iconBg: 'linear-gradient(135deg, #14b8a6, #06b6d4)',
-    title: 'New form entry', sub: 'Onboarding · #47',
-    badge: null,
-    top: '85%', left: '7%',
-    anim: 'cardFloatA', duration: 12, delay: 8,
-    hideTablet: true,
-  },
-
-  // ── RIGHT SIDE ──
-  {
-    icon: '🎧', iconBg: 'linear-gradient(135deg, #f59e0b, #f97316)',
-    title: 'Ticket #1284', sub: 'Resolved · 2h 14m',
-    badge: { text: 'Closed', color: '#f97316', bg: '#fed7aa' },
-    top: '8%', right: '4%',
-    anim: 'cardFloatB', duration: 10, delay: 2,
-  },
-  {
-    icon: '✉', iconBg: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-    title: '3 new emails', sub: 'Inbox · priority',
-    badge: { text: 'New', color: '#6366f1', bg: '#e0e7ff' },
-    top: '32%', right: '2%',
-    anim: 'cardFloatA', duration: 11, delay: 5,
-  },
-  {
-    icon: '📣', iconBg: 'linear-gradient(135deg, #ec4899, #db2777)',
-    title: 'Campaign sent', sub: '12.8K · 38% open',
-    badge: null,
-    top: '60%', right: '5%',
-    anim: 'cardFloatC', duration: 12, delay: 1,
-    hideTablet: true,
-  },
-  {
-    icon: '📅', iconBg: 'linear-gradient(135deg, #06b6d4, #0ea5e9)',
-    title: 'Meeting booked', sub: 'Today · 3:00 PM',
-    badge: { text: 'Today', color: '#0ea5e9', bg: '#dbeafe' },
-    top: '82%', right: '3%',
-    anim: 'cardFloatB', duration: 10, delay: 7,
-  },
-  {
-    icon: '🛒', iconBg: 'linear-gradient(135deg, #f97316, #ef4444)',
-    title: 'Order #5421', sub: '₹2,400 · Processing',
-    badge: null,
-    top: '46%', right: '6%',
-    anim: 'cardFloatA', duration: 11, delay: 9,
-    hideTablet: true,
-  },
 ]
 
 export default function Hero() {
@@ -489,42 +328,14 @@ export default function Hero() {
       <div className="premium-corner premium-corner-tl" />
       <div className="premium-corner premium-corner-br" />
 
-      {/* Dot grid */}
-      <div className="premium-grid" />
+      {/* Soft central glow under the grid */}
+      <div className="glow-spotlight" />
 
-      {/* ─── Floating activity cards — scattered, no shared starting point ─── */}
-      {activityCards.map((card, i) => {
-        const positionStyle = card.left
-          ? { top: card.top, left: card.left }
-          : { top: card.top, right: card.right }
+      {/* Static glowing grid lines */}
+      <div className="glow-grid" />
 
-        return (
-          <div
-            key={i}
-            className={`activity-card${card.hideTablet ? ' hide-tablet' : ''}`}
-            style={{
-              ...positionStyle,
-              animation: `${card.anim} ${card.duration}s ease-in-out ${card.delay}s infinite`,
-            }}
-          >
-            <div className="activity-icon" style={{ background: card.iconBg, color: '#fff' }}>
-              {card.icon}
-            </div>
-            <div className="activity-text">
-              <span className="activity-title">{card.title}</span>
-              <span className="activity-sub">{card.sub}</span>
-            </div>
-            {card.badge && (
-              <span
-                className="activity-badge"
-                style={{ color: card.badge.color, background: card.badge.bg }}
-              >
-                {card.badge.text}
-              </span>
-            )}
-          </div>
-        )
-      })}
+      {/* Subtle accent dots at intersections */}
+      <div className="glow-grid-dots" />
 
       <div className="container position-relative text-center" style={{ zIndex: 3 }}>
         {/* Badge */}
