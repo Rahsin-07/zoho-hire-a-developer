@@ -400,7 +400,7 @@ export default function Hero() {
             lineHeight: 1.65,
           }}
         >
-          We implement, customize and automate Zoho so your business runs smoother not just looks like it does.
+          At ZoFlowX, we connect businesses with certified Zoho developers who build custom CRM, web, and mobile apps on the Zoho platform, tailored to your workflows and designed to scale.
         </p>
 
         {/* Avatars + Stars pill */}
@@ -507,7 +507,7 @@ export default function Hero() {
           }}
         >
           <a
-            href="#contact"
+            href ="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -534,7 +534,7 @@ export default function Hero() {
               e.currentTarget.style.boxShadow = '0 4px 18px rgba(37,99,235,0.32)'
             }}
           >
-            Contact Zoho Developer
+            Hire a Zoho Developer
             <span style={{ fontSize: '1rem' }}></span>
           </a>
 
