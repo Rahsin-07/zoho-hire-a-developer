@@ -28,9 +28,9 @@ export default function Process() {
             <h2 className="section-title">
               How we work
               <br />
-              <span style={{ fontSize: '0.66em', fontWeight: 600, color: 'var(--muted)', letterSpacing: '-0.5px' }}>
+              {/* <span style={{ fontSize: '0.66em', fontWeight: 600, color: 'var(--muted)', letterSpacing: '-0.5px' }}>
                 Our Simple Zoho development process
-              </span>
+              </span> */}
             </h2>
             <p className="section-sub" style={{ marginBottom: 28 }}>From your first consultation to final delivery, we follow a clear and structured approach so you always know what's happening and what comes next.</p>
             <a href="#consultation" className="btn-primary-custom">Talk to Our Zoho Developer <i className="bi bi-arrow-right" /></a>

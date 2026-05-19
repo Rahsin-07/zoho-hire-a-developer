@@ -174,7 +174,7 @@ export default function WhyHire() {
                     {r.num}
                   </div>
 
-                  <div
+                  <h3
                     style={{
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '1rem',
@@ -185,7 +185,7 @@ export default function WhyHire() {
                     }}
                   >
                     {r.title}
-                  </div>
+                  </h3>
 
                   <div
                     style={{

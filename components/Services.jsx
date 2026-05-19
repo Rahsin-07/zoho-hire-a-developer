@@ -247,7 +247,7 @@ export default function Services() {
         </div>
 
         {/* Cards */}
-        <div className="row g-4">
+        <h3 className="row g-4">
           {services.map((s, i) => (
             <ServiceCard
               key={s.title}
@@ -256,7 +256,7 @@ export default function Services() {
               delay={i * 0.15}
             />
           ))}
-        </div>
+        </h3>
 
         {/* CTA */}
       <div
@@ -285,7 +285,7 @@ export default function Services() {
   />
 
   {/* Title */}
- <h3
+ <h4
   style={{
     fontSize: '1.9rem',
     fontWeight: 800,
@@ -295,7 +295,7 @@ export default function Services() {
   }}
 >
   Got a Zoho problem? We’ll build the solution.
-</h3>
+</h4>
 
   {/* Subtitle */}
   <p

@@ -138,7 +138,16 @@ export default function FAQ() {
                         gap: 12,
                       }}
                     >
-                      <span style={{ flex: 1 }}>{faq.q}</span>
+                     <h3
+  style={{
+    flex: 1,
+    fontSize: '1rem', 
+    fontWeight: 600,
+    margin: 0,
+  }}
+>
+  {faq.q}
+</h3>
                       <i
                         className="bi bi-chevron-down"
                         style={{

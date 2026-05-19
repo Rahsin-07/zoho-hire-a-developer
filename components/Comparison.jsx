@@ -233,7 +233,7 @@ export default function Comparison() {
 
                       <span
                         style={{
-                          background: GREEN,
+                          background: '#22c55e',
                           color: '#fff',
                           fontSize: '0.68rem',
                           fontWeight: 700,
@@ -267,7 +267,7 @@ export default function Comparison() {
 
                   const highlightCell = {
                     ...baseCell,
-                    background: '#f0fdf4',
+                    background: '#22c55e',
                     borderLeft: `2px solid ${GREEN}`,
                     borderRight: `2px solid ${GREEN}`,
                     color: HEADING,
@@ -298,7 +298,7 @@ export default function Comparison() {
                           if (idx === 0) c.style.background = '#f8fafc'
                           else if (idx === 1) c.style.background = '#fff7ed'
                           else if (idx === 2) c.style.background = '#eff6ff'
-                          else c.style.background = '#f0fdf4'
+                          else c.style.background = '#22c55e'
                         })
                       }}
                     >

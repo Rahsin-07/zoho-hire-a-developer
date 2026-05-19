@@ -143,7 +143,7 @@ export default function CaseStudies() {
                       pointerEvents: 'none',
                     }}
                   />
-                  <div
+                  <h3
                     style={{
                       fontSize: '0.75rem',
                       fontWeight: 600,
@@ -155,7 +155,7 @@ export default function CaseStudies() {
                     }}
                   >
                     {c.industry}
-                  </div>
+                  </h3>
                   <div
                     style={{
                       fontSize: '1.15rem',

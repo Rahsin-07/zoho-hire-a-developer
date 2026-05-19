@@ -20,6 +20,22 @@ const zohoProducts = [
   '/zoho-commerce.png',
 ]
 
+const avatars = [
+  { initials: 'RK', color: '#ef4444' },
+  { initials: 'PM', color: '#8b5cf6' },
+  { initials: 'SA', color: '#10b981' },
+  { initials: 'VN', color: '#f97316' },
+  { initials: 'DM', color: '#ec4899' },
+]
+
+const contactButtons = [
+  { label: 'Call',      href: 'tel:+1234567890',          primary: false },
+  { label: 'WhatsApp',  href: 'https://wa.me/1234567890', primary: true  },
+  { label: 'Email',     href: 'mailto:hello@zoflowx.com', primary: false },
+  { label: 'Schedule',  href: 'https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation', primary: false },
+  { label: 'Live Chat', href: '#chat',                    primary: false },
+]
+
 export default function Hero() {
   const statsRef = useRef(null)
   const animated = useRef(false)
@@ -56,10 +72,9 @@ export default function Hero() {
     return () => observer.disconnect()
   }, [])
 
-  // Subtle parallax follow for the glow circles
   const handleMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width  - 0.5
+    const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
     setMouse({ x, y })
   }
@@ -77,7 +92,7 @@ export default function Hero() {
       }}
     >
 
-      {/* Glow Background  follows mouse subtly */}
+      {/* Glow Background follows mouse subtly */}
       <div
         style={{
           position: 'absolute',
@@ -135,29 +150,7 @@ export default function Hero() {
           overflow: 'hidden',
         }}
       >
-        {/* {zohoProducts.map((p, i) => (
-          <div
-            key={p}
-            style={{
-              position: 'absolute',
-              left: `${[8, 28, 50, 78, 82, 4, 18, 72, 60][i]}%`,
-              top: `${[18, 32, 10, 22, 46, 58, 80, 72, 88][i]}%`,
-              animation: `float${i % 3} ${4 + i * 0.4}s ease-in-out infinite`,
-            }}
-          >
-            <img
-              src={p}
-              alt={`zoho-product-${i}`}
-              style={{
-                height: 80,
-                width: 80,
-                objectFit: 'contain',
-                display: 'block',
-                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.12))',
-              }}
-            />
-          </div>
-        ))} */}
+        {/* Commented out as in original */}
       </div>
 
       <style>{`
@@ -198,12 +191,59 @@ export default function Hero() {
           0%, 100% { transform: translateX(0); }
           50%      { transform: translateX(5px); }
         }
+        @keyframes starPop {
+          0%   { transform: scale(0.6); opacity: 0; }
+          70%  { transform: scale(1.15); }
+          100% { transform: scale(1); opacity: 1; }
+        }
         .hero-rise-1 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.05s; }
         .hero-rise-2 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.18s; }
         .hero-rise-3 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.31s; }
         .hero-rise-4 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.44s; }
         .hero-rise-5 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.57s; }
+        .hero-rise-6 { animation: heroRise 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.68s; }
         .hero-arrow:hover .arrow-i { animation: arrowSlide 0.9s ease-in-out infinite; }
+        .contact-btn {
+          display: inline-flex;
+          align-items: center;
+          padding: 7px 16px;
+          border-radius: 10px;
+          font-family: Inter, sans-serif;
+          font-size: 0.82rem;
+          font-weight: 600;
+          text-decoration: none;
+          border: 1.5px solid rgba(15,23,42,0.1);
+          background: #fff;
+          color: #374151;
+          cursor: pointer;
+          transition: all 0.22s cubic-bezier(0.22,1,0.36,1);
+          white-space: nowrap;
+          letter-spacing: 0.1px;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .contact-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          border-color: rgba(37,99,235,0.22);
+          color: #1d4ed8;
+        }
+        .contact-btn-whatsapp {
+          background: #f0fdf4;
+          border-color: rgba(16,185,129,0.28);
+          color: #059669;
+        }
+        .contact-btn-whatsapp:hover {
+          background: #dcfce7;
+          border-color: rgba(16,185,129,0.45);
+          box-shadow: 0 4px 12px rgba(16,185,129,0.12);
+          color: #047857;
+        }
+        .star-anim { animation: starPop 0.4s cubic-bezier(0.22,1,0.36,1) both; }
+        .star-anim:nth-child(1) { animation-delay: 0.72s; }
+        .star-anim:nth-child(2) { animation-delay: 0.80s; }
+        .star-anim:nth-child(3) { animation-delay: 0.88s; }
+        .star-anim:nth-child(4) { animation-delay: 0.96s; }
+        .star-anim:nth-child(5) { animation-delay: 1.04s; }
       `}</style>
 
       <div className="container position-relative text-center">
@@ -249,44 +289,44 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Heading  reduced size */}
-      <h1
-  className="hero-rise-2"
-  style={{
-    fontFamily: 'Inter, sans-serif',
-    fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
-    fontWeight: 500,
-    color: '#0f172a',
-    marginBottom: 22,
-    letterSpacing: '-1.2px',
-    lineHeight: 1.0,
-    maxWidth: 980,
-    marginInline: 'auto',
-  }}
->
-  Hire a Zoho developer who{' '}
-  <span
-    style={{
-      background:
-        'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
-      backgroundSize: '200% 100%',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
-      animation: 'heroGradShift 6s ease-in-out infinite',
-      display: 'inline-block',
-    }}
-  >
-    actually builds
-  </span>
-</h1>
+        {/* Heading */}
+        <h1
+          className="hero-rise-2"
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: 'clamp(1.6rem, 3.6vw, 3rem)',
+            fontWeight: 500,
+            color: '#0f172a',
+            marginBottom: 22,
+            letterSpacing: '-1.2px',
+            lineHeight: 1.0,
+            maxWidth: 980,
+            marginInline: 'auto',
+          }}
+        >
+          Hire a Zoho developer who{' '}
+          <span
+            style={{
+              background:
+                'linear-gradient(90deg,#2563eb 0%,#8b5cf6 50%,#ef4444 100%)',
+              backgroundSize: '200% 100%',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              animation: 'heroGradShift 6s ease-in-out infinite',
+              display: 'inline-block',
+            }}
+          >
+            actually builds
+          </span>
+        </h1>
 
-        {/* Paragraph  full doc text, hyphens removed */}
+        {/* Paragraph */}
         <p
           className="hero-rise-3"
           style={{
             fontSize: '1.05rem',
-            color: '#475569',
+            color: '#64748b',
             maxWidth: 820,
             margin: '0 auto 18px',
             lineHeight: 1.30,
@@ -298,7 +338,8 @@ export default function Hero() {
           powerful, cloud based CRM, web, and mobile applications. Our
           certified Zoho Creator experts design tailored solutions that
           streamline operations, eliminate manual tasks, and support long
-          term growth.
+          term growth. From startups to scaling enterprises, we deliver flexible,
+          scalable Zoho solutions built around your exact business needs.
         </p>
 
         <p
@@ -313,95 +354,170 @@ export default function Hero() {
             fontWeight: 400,
           }}
         >
-          From startups to scaling enterprises, we deliver flexible,
-          scalable Zoho solutions built around your exact business needs.
         </p>
 
-        {/* Buttons */}
+        {/* ── Unified CTA + Social Proof Block ── */}
         <div
           className="hero-rise-4"
           style={{
             display: 'flex',
-            justifyContent: 'center',
-            gap: 16,
-            flexWrap: 'wrap',
-            marginBottom: 64,
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 14,
+            marginBottom: 48,
           }}
         >
-          {/* Primary */}
-          <a
-            className="hero-arrow"
-            href="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
-            style={{
-              background: '#0d6efd',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 16,
-              padding: '0.95rem 2rem',
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: 700,
-              fontSize: '0.98rem',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              boxShadow: '0 12px 30px rgba(13,110,253,0.28)',
-              transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
-              e.currentTarget.style.boxShadow = '0 18px 40px rgba(13,110,253,0.4)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0) scale(1)'
-              e.currentTarget.style.boxShadow = '0 12px 30px rgba(13,110,253,0.28)'
-            }}
-          >
-            Hire a Zoho Developer
-            <span className="arrow-i" style={{ display: 'inline-flex' }}>→</span>
-          </a>
+          {/* Row 1: CTA Buttons — same height, matched radius */}
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <a
+              className="hero-arrow"
+              href="https://arul-zoflowx.zohobookings.in/#/Zoho_Consultation"
+              style={{
+                background: 'linear-gradient(135deg, #1d4ed8, #2563eb)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 14,
+                padding: '13px 28px',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 700,
+                fontSize: '0.95rem',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                boxShadow: '0 8px 24px rgba(37,99,235,0.32)',
+                transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 14px 32px rgba(37,99,235,0.42)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,99,235,0.32)'
+              }}
+            >
+              Hire a Zoho Developer
+              <span className="arrow-i">→</span>
+            </a>
 
-          {/* Secondary */}
-          <a
-            href="#pricing"
+            <a
+              href="#pricing"
+              style={{
+                background: '#fff',
+                color: '#0f172a',
+                border: '1.5px solid rgba(15,23,42,0.12)',
+                borderRadius: 14,
+                padding: '13px 28px',
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.borderColor = 'rgba(37,99,235,0.35)'
+                e.currentTarget.style.boxShadow = '0 6px 18px rgba(37,99,235,0.1)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.borderColor = 'rgba(15,23,42,0.12)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'
+              }}
+            >
+              View Pricing
+            </a>
+          </div>
+
+          {/* Row 2: Avatars + Stars — compact inline pill */}
+          <div
+            className="hero-rise-5"
             style={{
-              background: 'rgba(255,255,255,0.72)',
-              backdropFilter: 'blur(10px)',
-              color: '#0f172a',
-              border: '1px solid rgba(15,23,42,0.08)',
-              borderRadius: 16,
-              padding: '0.95rem 2rem',
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: 700,
-              fontSize: '0.98rem',
-              textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
               gap: 10,
-              boxShadow: '0 10px 26px rgba(0,0,0,0.06)',
-              transition: 'all 0.35s cubic-bezier(0.22,1,0.36,1)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)'
-              e.currentTarget.style.borderColor = 'rgba(37,99,235,0.4)'
-              e.currentTarget.style.boxShadow = '0 16px 32px rgba(37,99,235,0.12)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.borderColor = 'rgba(15,23,42,0.08)'
-              e.currentTarget.style.boxShadow = '0 10px 26px rgba(0,0,0,0.06)'
+              background: 'rgba(255,255,255,0.8)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(0,0,0,0.07)',
+              borderRadius: 999,
+              padding: '6px 14px 6px 6px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
             }}
           >
-            View Pricing
-          </a>
+            {/* Overlapping avatars */}
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {avatars.map((a, i) => (
+                <div
+                  key={a.initials}
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: '50%',
+                    background: a.color,
+                    border: '2px solid #fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: i === 0 ? 0 : -8,
+                    zIndex: avatars.length - i,
+                    position: 'relative',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '0.6rem',
+                    fontWeight: 700,
+                    color: '#fff',
+                    letterSpacing: '0.2px',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
+                    transition: 'transform 0.2s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.12)'; e.currentTarget.style.zIndex = 99 }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.zIndex = avatars.length - i }}
+                >
+                  {a.initials}
+                </div>
+              ))}
+            </div>
+
+            {/* Divider */}
+            <div style={{ width: 1, height: 16, background: 'rgba(0,0,0,0.1)', borderRadius: 1 }} />
+
+            {/* Stars */}
+            <div style={{ display: 'flex', gap: 1 }}>
+              {[1,2,3,4,5].map((s) => (
+                <span key={s} className="star-anim" style={{ fontSize: '0.85rem', color: '#f59e0b', lineHeight: 1 }}>★</span>
+              ))}
+            </div>
+
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', fontWeight: 700, color: '#0f172a' }}>
+              4.8/5
+            </span>
+          </div>
+
+          {/* Row 3: Contact buttons — small, tight, consistent */}
+          <div
+            className="hero-rise-5"
+            style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center' }}
+          >
+            {contactButtons.map((btn) => (
+              <a
+                key={btn.label}
+                href={btn.href}
+                className={`contact-btn${btn.primary ? ' contact-btn-whatsapp' : ''}`}
+              >
+                {btn.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Stats */}
         <div
           ref={statsRef}
-          className="hero-rise-5"
+          className="hero-rise-6"
           style={{
             display: 'flex',
             justifyContent: 'space-around',
@@ -442,9 +558,7 @@ export default function Hero() {
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '2.4rem',
                   fontWeight: 800,
-                  background:
-                   
-                    'linear-gradient(90deg, #2563eb,#eab308, #f97316, #ef4444)',
+                  background: 'linear-gradient(90deg, #2563eb,#eab308, #f97316, #ef4444)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',

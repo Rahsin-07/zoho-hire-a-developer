@@ -84,7 +84,15 @@ export default function Testimonials() {
                     </div>
 
                     <div>
-                      <div style={{ fontWeight: 600 }}>{t.name}</div>
+                     <h3
+  style={{
+    fontWeight: 600,
+    fontSize: '1rem',
+    margin: 0,
+  }}
+>
+  {t.name}
+</h3>
                       <div style={{ fontSize: 12, color: '#777' }}>{t.role}</div>
                     </div>
 

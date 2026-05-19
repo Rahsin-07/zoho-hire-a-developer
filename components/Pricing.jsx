@@ -55,7 +55,7 @@ export default function Pricing() {
         </div>
         <div className="row g-4 justify-content-center">
           {plans.map((plan, i) => (
-            <div className="col-md-6 col-lg-4 fade-up" key={plan.type} style={{ transitionDelay: `${i * 0.1}s` }}>
+            <h3 className="col-md-6 col-lg-4 fade-up" key={plan.type} style={{ transitionDelay: `${i * 0.1}s` }}>
               <div
                 style={{
                   background: plan.featured ? '#0f172a' : '#fff',
@@ -150,7 +150,7 @@ export default function Pricing() {
                   >Hire Our Developer Now</a>
                 }
               </div>
-            </div>
+            </h3>
           ))}
         </div>
       </div>
