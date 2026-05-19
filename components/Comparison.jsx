@@ -384,7 +384,7 @@ export default function Comparison() {
             }
           `}</style>
 
-          <h3
+          <h4
             style={{
               color: '#fff',
               fontFamily: 'Inter, sans-serif',
@@ -392,7 +392,7 @@ export default function Comparison() {
             }}
           >
             Ready to transform your business with ZoFlowX?
-          </h3>
+          </h4>
 
           <p
             style={{
